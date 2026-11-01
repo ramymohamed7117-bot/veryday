@@ -1,0 +1,59 @@
+{
+  "id": "./",
+  "name": "يوميات العملاء — إدارة العملاء والزيارات والمرفقات",
+  "short_name": "يوميات العملاء",
+  "description": "تطبيق لتسجيل بيانات العملاء والزيارات والمرفقات والمواعيد القادمة، بكلمة مرور، ويعمل بدون إنترنت. كل البيانات تُخزَّن على الجهاز نفسه.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#0b6b62",
+  "background_color": "#eef3f8",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "العملاء",
+      "short_name": "العملاء",
+      "description": "فتح قائمة العملاء مباشرة",
+      "url": "./?tab=clients",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "المواعيد القادمة",
+      "short_name": "المواعيد",
+      "description": "فتح المواعيد القادمة والزيارات المتأخرة",
+      "url": "./?tab=upcoming",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "المرفقات",
+      "short_name": "المرفقات",
+      "description": "فتح كل مرفقات العملاء",
+      "url": "./?tab=attach",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

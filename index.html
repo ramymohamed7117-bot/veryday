@@ -1,212 +1,1947 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#14213d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
-<title>نظام إدارة الأعمال</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b6b62">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="يوميات العملاء">
+<meta name="application-name" content="يوميات العملاء">
+<!-- مسارات نسبية حتى تعمل تحت مجلد فرعي على GitHub Pages مثل /repo/ -->
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<title>يوميات العملاء — إدارة العملاء والمرفقات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#14213d;--amber:#f2a900;--bg:#f3f4f6;--card:#fff;--text:#1b2433;--mute:#667085;--line:#e3e6ec;--ok:#0f9d6b;--bad:#d92d20;--info:#2563eb;--warn:#b54708;--brand:#14213d;--hover:#f8f9fb;--sh:0 1px 2px rgba(16,24,40,.06),0 8px 24px -12px rgba(16,24,40,.2);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0d1320;--card:#161f31;--text:#e6e9f0;--mute:#98a2b3;--line:#27324a;--brand:#f2c14e;--hover:#1b2740;--ok:#34d399;--bad:#f87171;--info:#60a5fa;--warn:#fbbf24}}
-:root[data-theme=dark]{--bg:#0d1320;--card:#161f31;--text:#e6e9f0;--mute:#98a2b3;--line:#27324a;--brand:#f2c14e;--hover:#1b2740;--ok:#34d399;--bad:#f87171;--info:#60a5fa;--warn:#fbbf24}
-*{box-sizing:border-box;margin:0}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{font-family:'Cairo',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100dvh}
-.lg{min-height:100dvh;display:flex;align-items:center;justify-content:center;background:var(--ink);padding:20px}
-.lc{background:var(--card);padding:36px 32px;border-radius:18px;width:100%;max-width:400px;display:grid;gap:16px;text-align:center}
-.logo{width:68px;height:68px;border-radius:16px;background:var(--amber);display:grid;place-items:center;font-size:2rem;margin:0 auto}
-.lc h1{color:var(--brand);font-size:1.5rem}.lc p{color:var(--mute);margin-top:-10px}
-label{display:grid;gap:6px;font-weight:600;font-size:.92rem;text-align:right}
-.in{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--text);font:inherit}
-.in.sm{padding:4px 8px;font-size:.85rem;width:auto}
-.in:focus,.btn:focus-visible,.nv:focus-visible{outline:3px solid rgba(37,99,235,.35);outline-offset:1px}
-.btn{font:inherit;font-weight:600;border:0;border-radius:9px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-.p{background:var(--amber);color:#14213d}.p:hover{filter:brightness(.95)}
-.g{background:transparent;border:1px solid var(--line);color:var(--text)}
-.d{background:var(--bad);color:#fff}.s{padding:4px 9px;font-size:.85rem}
-.app{display:none}.app.on{display:block}
-.sb{position:fixed;top:0;right:0;bottom:0;width:250px;background:var(--ink);color:#fff;display:flex;flex-direction:column;padding:20px 14px;padding-top:calc(20px + env(safe-area-inset-top,0px));z-index:50;transition:transform .25s}
-.brand{font-size:1.15rem;padding:4px 10px 18px;display:flex;gap:8px;align-items:center}
-nav{flex:1;overflow:auto}
-.nv{display:flex;gap:10px;width:100%;padding:11px 12px;border:0;border-radius:9px;background:none;color:#c9d1e3;font:inherit;cursor:pointer;text-align:right;margin-bottom:3px}
-.nv:hover{background:rgba(255,255,255,.08)}.nv.on{background:rgba(242,169,0,.16);color:#fff;box-shadow:inset -3px 0 var(--amber)}
-.me{padding:12px 10px 4px;border-top:1px solid rgba(255,255,255,.12);font-size:.85rem;color:#c9d1e3}
-main{margin-right:250px;padding:26px 30px;max-width:1200px}
-.top{display:flex;align-items:center;gap:12px;margin-bottom:20px}.top h2{color:var(--brand);font-size:1.5rem}.bg{display:none}
-.bar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}.bar .in{flex:1;min-width:180px}
-.tw{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh)}
-table{width:100%;border-collapse:collapse}
-th,td{padding:12px 14px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
-th{background:var(--hover);color:var(--mute);font-size:.85rem;font-weight:600}tbody tr:hover{background:var(--hover)}tr:last-child td{border-bottom:0}
-td.ac{display:flex;gap:6px}.em{text-align:center;color:var(--mute);padding:36px!important;white-space:normal}
-.b{--c:var(--info);color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);padding:3px 11px;border-radius:20px;font-size:.82rem;font-weight:600}
-.b.ok{--c:var(--ok)}.b.bad{--c:var(--bad)}.b.warn{--c:var(--warn)}
-.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:14px}
-.sc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--sh)}
-.sc b{display:block;font-size:1.6rem;line-height:1.3}.sc span{color:var(--mute);font-size:.9rem}
-.sc.hi{background:var(--ink);color:#fff;border-color:var(--ink)}.sc.hi span{color:#c9d1e3}.sc.hi b{color:var(--amber)}
-.h3{margin:22px 0 10px;color:var(--brand)}
-.act{list-style:none;background:var(--card);border:1px solid var(--line);border-radius:12px}
-.act li{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}.act li:last-child{border:0}.act small{color:var(--mute)}
-.md{position:fixed;inset:0;background:rgba(10,15,30,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}.md.on{display:flex}
-.mc{background:var(--card);border-radius:16px;width:100%;max-width:640px;max-height:90dvh;overflow:auto;padding:22px}
-.mc h3{color:var(--brand);margin-bottom:16px}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}.fg .w{grid-column:1/-1}.row{display:flex;gap:10px;margin-top:8px}
-dl{display:grid;grid-template-columns:130px 1fr;gap:8px 14px}dt{color:var(--mute)}dd{white-space:pre-wrap}
-.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin:8px 0 14px}.gal img{width:100%;height:100px;object-fit:cover;border-radius:8px}
-small{color:var(--mute)}
-#toasts{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:18px;display:grid;gap:8px;z-index:300}
-.toast{background:#0f172a;color:#fff;padding:11px 18px;border-radius:10px;border-right:4px solid var(--ok);box-shadow:var(--sh)}.toast.err{border-color:var(--bad)}
-@media(max-width:820px){.sb{transform:translateX(100%)}.sb.open{transform:none}main{margin:0;padding:16px}.bg{display:inline-flex}.fg{grid-template-columns:1fr}.menu-pad{padding-top:6px}}
-@media print{.sb,.bar,.bg,td.ac,th:last-child{display:none!important}main{margin:0}}
-.fr{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}.fn{flex:1;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fn:hover{text-decoration:underline}
+:root{
+  --bg:#f1f5f9; --card:#ffffff; --primary:#0f766e; --primary-dark:#115e59;
+  --accent:#f59e0b; --danger:#dc2626; --blue:#2563eb; --text:#0f172a; --muted:#64748b;
+  --line:#e2e8f0; --radius:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  font-family:"Cairo","Segoe UI",Tahoma,"Noto Kufi Arabic",system-ui,sans-serif;
+  background:var(--bg); color:var(--text); font-size:15px; line-height:1.6;
+  overscroll-behavior-y:contain;
+}
+button,input,select,textarea{font-family:inherit;font-size:15px}
+a{color:var(--blue);text-decoration:none}
+
+/* ---------- Layout ---------- */
+header{
+  position:sticky; top:0; z-index:40; background:var(--primary); color:#fff;
+  padding:12px 14px; display:flex; align-items:center; gap:10px;
+  box-shadow:0 2px 10px rgba(15,23,42,.18);
+}
+header h1{font-size:17px; margin:0; font-weight:700; flex:1}
+header .hbtn{
+  background:rgba(255,255,255,.16); border:0; color:#fff; border-radius:10px;
+  padding:7px 11px; font-size:14px; font-weight:600;
+}
+main{padding:12px 12px 90px 12px; max-width:820px; margin:0 auto}
+nav.bottom{
+  position:fixed; bottom:0; left:0; right:0; z-index:50; background:#fff;
+  border-top:1px solid var(--line); display:flex; padding:6px 4px 8px;
+  box-shadow:0 -2px 12px rgba(15,23,42,.08);
+}
+nav.bottom button{
+  flex:1; background:none; border:0; color:var(--muted); padding:6px 2px;
+  display:flex; flex-direction:column; align-items:center; gap:2px; font-size:11px; font-weight:600;
+  border-radius:12px; position:relative;
+}
+nav.bottom button .ic{font-size:20px; line-height:1}
+nav.bottom button.active{color:var(--primary); background:#ecfdf5}
+nav.bottom .badge{
+  position:absolute; top:2px; left:calc(50% + 10px); background:var(--danger); color:#fff;
+  font-size:10px; min-width:17px; height:17px; border-radius:9px; line-height:17px; padding:0 4px;
+}
+
+/* ---------- Cards & bits ---------- */
+.card{background:var(--card); border-radius:var(--radius); padding:13px 14px; margin-bottom:11px;
+  box-shadow:0 1px 3px rgba(15,23,42,.07); border:1px solid rgba(226,232,240,.8)}
+.card.tap{cursor:pointer}
+.card.tap:active{transform:scale(.995); background:#f8fafc}
+.row{display:flex; align-items:center; gap:10px}
+.row.between{justify-content:space-between}
+.grow{flex:1; min-width:0}
+.avatar{
+  width:44px;height:44px;border-radius:50%;background:#ccfbf1;color:var(--primary-dark);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex:0 0 auto
+}
+.name{font-weight:700; font-size:15.5px}
+.meta{color:var(--muted); font-size:12.5px; display:flex; gap:8px; flex-wrap:wrap; margin-top:2px}
+.chip{display:inline-block; padding:3px 9px; border-radius:999px; font-size:11.5px; font-weight:700}
+.chip.green{background:#dcfce7;color:#166534}
+.chip.amber{background:#fef3c7;color:#92400e}
+.chip.red{background:#fee2e2;color:#991b1b}
+.chip.blue{background:#dbeafe;color:#1e40af}
+.chip.gray{background:#f1f5f9;color:#475569}
+.section-title{font-size:13px;font-weight:800;color:var(--muted);margin:16px 4px 8px;letter-spacing:.2px}
+.empty{text-align:center;color:var(--muted);padding:34px 14px;font-size:14px}
+.empty .big{font-size:42px;display:block;margin-bottom:8px}
+hr.sep{border:0;border-top:1px solid var(--line);margin:12px 0}
+
+/* buttons */
+.btn{
+  border:0; border-radius:12px; padding:10px 14px; font-weight:700; font-size:14px;
+  background:var(--primary); color:#fff; display:inline-flex; align-items:center; gap:6px; justify-content:center;
+}
+.btn:active{opacity:.85}
+.btn.block{width:100%}
+.btn.ghost{background:#f1f5f9;color:var(--text)}
+.btn.line{background:#fff;color:var(--primary);border:1.5px solid var(--primary)}
+.btn.blue{background:var(--blue)}
+.btn.amber{background:var(--accent);color:#3b2a05}
+.btn.red{background:var(--danger)}
+.btn.sm{padding:7px 10px;font-size:13px;border-radius:10px}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.fab{
+  position:fixed; bottom:78px; left:16px; z-index:45; width:56px;height:56px;border-radius:50%;
+  background:var(--primary); color:#fff; border:0; font-size:28px; line-height:1;
+  box-shadow:0 6px 16px rgba(15,118,110,.45)
+}
+
+/* forms */
+label.fld{display:block; margin-bottom:11px}
+label.fld span{display:block; font-size:12.5px; font-weight:700; color:#334155; margin-bottom:5px}
+input[type=text],input[type=tel],input[type=date],input[type=email],input[type=search],input[type=number],select,textarea{
+  width:100%; padding:11px 12px; border:1.5px solid var(--line); border-radius:12px; background:#fff; color:var(--text)
+}
+input:focus,select:focus,textarea:focus{outline:0; border-color:var(--primary); background:#fff}
+textarea{min-height:78px; resize:vertical}
+.hint{font-size:11.5px;color:var(--muted);margin-top:4px}
+.searchbar{position:relative;margin-bottom:10px}
+.searchbar input{padding-left:34px}
+.searchbar .ic{position:absolute;left:11px;top:11px;color:var(--muted)}
+
+/* modal sheet */
+.sheet-bg{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:100;display:flex;align-items:flex-end}
+.sheet{background:var(--bg); width:100%; max-height:94vh; overflow-y:auto; border-radius:20px 20px 0 0;
+  padding:0 0 22px; animation:up .22s ease}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.sheet-head{position:sticky;top:0;background:#fff;padding:13px 14px;display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--line); z-index:2}
+.sheet-head h2{margin:0;font-size:16px;flex:1}
+.sheet-body{padding:14px}
+.x{background:#f1f5f9;border:0;border-radius:10px;width:34px;height:34px;font-size:17px;color:#475569}
+
+/* attachments */
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:9px}
+.thumb{position:relative;border-radius:12px;overflow:hidden;background:#e2e8f0;aspect-ratio:1;border:1px solid var(--line)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .del{position:absolute;top:3px;left:3px;background:rgba(220,38,38,.92);color:#fff;border:0;
+  border-radius:8px;width:24px;height:24px;font-size:13px;line-height:1}
+.fileitem{display:flex;align-items:center;gap:9px;background:#f8fafc;border:1px solid var(--line);
+  border-radius:12px;padding:9px 11px;margin-top:7px}
+.fileitem .fi{font-size:22px}
+.fileitem .nm{font-size:13px;font-weight:600;word-break:break-all}
+.fileitem .sz{font-size:11px;color:var(--muted)}
+.pending{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pending .p{background:#e0f2fe;color:#075985;border-radius:9px;padding:5px 9px;font-size:12px;display:flex;gap:6px;align-items:center}
+.pending .p button{background:none;border:0;color:#0369a1;font-size:14px}
+
+/* banners */
+.banner{border-radius:14px;padding:11px 13px;margin-bottom:11px;font-size:13.5px;font-weight:600;display:flex;gap:9px;align-items:center}
+.banner.warn{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}
+.banner.info{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe}
+.banner.map{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0; display:block}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.kpi{background:#fff;border-radius:14px;padding:10px 6px;text-align:center;border:1px solid var(--line)}
+.kpi b{display:block;font-size:20px;color:var(--primary)}
+.kpi span{font-size:11px;color:var(--muted);font-weight:700}
+.tl{border-right:2px solid var(--line); padding-right:12px; margin-right:5px}
+.tl .dot{position:relative}
+.tl .dot:before{content:"";position:absolute;right:-19px;top:15px;width:11px;height:11px;border-radius:50%;
+  background:var(--primary);border:2px solid #fff;box-shadow:0 0 0 1px var(--line)}
+.tag{font-size:11px;background:#f1f5f9;color:#475569;border-radius:7px;padding:2px 7px;font-weight:700}
+.dl-link{font-size:13.5px}
+
+/* ============================================================
+   طبقة التنسيق الاحترافي (v2) — هوية بصرية موحّدة
+   ============================================================ */
+:root{
+  --bg:#eef3f8; --card:#ffffff; --primary:#0b6b62; --primary-dark:#08453f;
+  --primary-soft:#e4f4f1; --accent:#b8860b; --danger:#c0392b; --blue:#1d4ed8;
+  --text:#0b1b2b; --muted:#5b6b7c; --line:#dde6ef; --radius:18px;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.04);
+  --shadow:0 10px 30px -14px rgba(16,24,40,.28);
+}
+body{letter-spacing:.1px; background-image:radial-gradient(1100px 380px at 100% -10%, #e6f2f0 0%, transparent 60%)}
+header{background:linear-gradient(135deg,var(--primary),var(--primary-dark)); padding:13px 16px;
+  border-radius:0 0 20px 20px; box-shadow:0 12px 26px -18px rgba(8,69,63,.95)}
+header h1{font-size:18px; letter-spacing:-.2px}
+header .hbtn{border-radius:12px; padding:8px 11px; backdrop-filter:blur(6px); transition:.15s}
+header .hbtn:active{transform:scale(.95)}
+main{padding:14px 14px 110px}
+.card{border-radius:var(--radius); padding:15px 16px; box-shadow:var(--shadow-sm);
+  border:1px solid var(--line); transition:box-shadow .18s,transform .12s}
+.card.tap:active{transform:scale(.99)}
+@media(hover:hover){.card.tap:hover{box-shadow:var(--shadow)}}
+.avatar{box-shadow:inset 0 0 0 1px rgba(11,107,98,.12)}
+.chip{padding:3px 10px}
+.section-title{display:flex; align-items:center; gap:8px; font-size:13px; font-weight:800;
+  color:#334155; margin:18px 4px 9px; letter-spacing:0}
+.section-title:before{content:""; width:4px; height:15px; border-radius:3px; background:var(--primary); flex:0 0 auto}
+.btn{border-radius:14px; padding:12px 16px; box-shadow:0 1px 2px rgba(16,24,40,.10);
+  transition:transform .12s, box-shadow .15s, background .15s}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:#eff3f7}
+.btn.line{border-width:1.6px}
+.btn-grid{gap:9px}
+.kpis{gap:9px}
+.kpi{background:linear-gradient(180deg,#fff,#f7fafc); border-radius:16px; padding:12px 6px; box-shadow:var(--shadow-sm)}
+.kpi b{font-size:21px}
+.kpi span{font-size:10.5px}
+.hero-card{background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:#fff; border:0}
+.hero-card .name,.hero-card b{color:#fff}
+.hero-card .meta{color:rgba(255,255,255,.86)}
+.hero-card .hint{color:rgba(255,255,255,.82)}
+.hero-card .avatar{background:rgba(255,255,255,.22); color:#fff; font-weight:800}
+.hero-card .chip{background:rgba(255,255,255,.2); color:#fff}
+.hero-card hr.sep{border-top-color:rgba(255,255,255,.25)}
+input[type=text],input[type=tel],input[type=date],input[type=email],input[type=search],input[type=number],input[type=password],select,textarea{
+  padding:12px 13px; border:1.5px solid var(--line); border-radius:13px; transition:border-color .15s, box-shadow .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--primary); box-shadow:0 0 0 4px var(--primary-soft)}
+.hint{line-height:1.7}
+nav.bottom{padding:8px 6px 10px; border-radius:20px 20px 0 0; box-shadow:0 -10px 28px -18px rgba(16,24,40,.5)}
+nav.bottom button{font-size:10.5px; padding:6px 1px; border-radius:14px; transition:.15s}
+nav.bottom button.active{background:var(--primary-soft)}
+nav.bottom button .ic{font-size:19px}
+.fab{box-shadow:0 12px 26px -10px rgba(8,69,63,.9)}
+.empty{padding:40px 16px}
+.empty .big{font-size:38px; opacity:.92}
+
+/* ---------- المرفقات (تخطيط محسّن) ---------- */
+.att-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(94px,1fr)); gap:9px; margin-top:6px}
+.att-tile{position:relative; border-radius:14px; overflow:hidden; background:#e9eef4; aspect-ratio:1; border:1px solid var(--line)}
+.att-tile img{width:100%; height:100%; object-fit:cover; display:block}
+.att-tile .badge2{position:absolute; bottom:4px; right:4px; background:rgba(11,27,43,.72); color:#fff;
+  font-size:9.5px; padding:2px 6px; border-radius:8px}
+.att-tile .del{position:absolute; top:4px; left:4px; background:rgba(192,57,43,.94); color:#fff;
+  border:0; border-radius:9px; width:24px; height:24px; font-size:12px; line-height:1}
+.att-row{display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--line);
+  border-radius:14px; padding:9px 11px; margin-top:7px}
+.att-ico{width:40px; height:40px; border-radius:12px; background:#eff3f7; display:flex;
+  align-items:center; justify-content:center; font-size:19px; flex:0 0 auto}
+.att-row .nm{font-size:13.5px; font-weight:700; word-break:break-all}
+.att-row .sz{font-size:11px; color:var(--muted)}
+.toolbar{display:flex; gap:7px; overflow-x:auto; padding:2px 2px 9px; scrollbar-width:none}
+.toolbar::-webkit-scrollbar{display:none}
+.seg{border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 13px;
+  font-size:12.5px; font-weight:700; color:#475569; white-space:nowrap}
+.seg.on{background:var(--primary); border-color:var(--primary); color:#fff}
+
+/* ---------- شاشة كلمة المرور ---------- */
+.lock{position:fixed; inset:0; z-index:900; display:flex; align-items:center; justify-content:center; padding:20px;
+  background:linear-gradient(160deg,#062f2c,#0b6b62 60%,#062f2c)}
+.lock-card{width:100%; max-width:410px; background:#fff; border-radius:24px; padding:26px 20px 20px;
+  box-shadow:0 30px 70px -24px rgba(0,0,0,.6); text-align:center; animation:up .3s ease}
+.lock-logo{width:64px; height:64px; margin:0 auto 12px; border-radius:20px; background:var(--primary-soft);
+  color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:30px}
+.lock-card h2{margin:0 0 6px; font-size:18px; color:var(--text)}
+.lock-sub{color:var(--muted); font-size:13px; margin:0 0 16px; line-height:1.75}
+.lock-field{position:relative; margin-bottom:10px}
+.lock-field input{width:100%; padding:13px 42px 13px 14px; border:1.5px solid var(--line);
+  border-radius:14px; font-size:15.5px}
+.lock-field .eye{position:absolute; left:5px; top:5px; border:0; background:none; font-size:17px; padding:8px; color:var(--muted)}
+.lock-err{color:var(--danger); font-size:13px; font-weight:700; min-height:20px; margin-bottom:4px}
+.lock-row{display:flex; align-items:center; gap:8px; font-size:12.5px; color:#334155; margin:2px 0 12px; text-align:right}
+.lock-row input{width:auto}
+.lock-note{font-size:11.5px; color:var(--muted); margin-top:14px; line-height:1.8}
+.shake{animation:shake .34s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}60%{transform:translateX(8px)}}
+
+/* ---------- عارض المرفقات ---------- */
+.viewer{position:fixed; inset:0; background:rgba(6,12,20,.95); z-index:820; display:flex; flex-direction:column}
+.viewer .vh{display:flex; align-items:center; gap:9px; padding:12px 14px; color:#fff}
+.viewer .vh h3{margin:0; font-size:14px; flex:1; font-weight:700; word-break:break-all}
+.viewer .vi{flex:1; display:flex; align-items:center; justify-content:center; padding:8px 14px; overflow:auto}
+.viewer .vi img{max-width:100%; max-height:100%; border-radius:14px; background:#fff}
+.viewer .vf{padding:12px 14px 18px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+#appWrap.locked{display:none}
+
+/* ---------- نافذة تأكيد داخلية (بدل نافذة المتصفح) ---------- */
+#confirmRoot{position:fixed; inset:0; z-index:950; display:none; align-items:center; justify-content:center;
+  padding:20px; background:rgba(6,12,20,.55)}
+#confirmRoot.show{display:flex}
+.confirm-box{background:#fff; border-radius:22px; padding:22px 18px 16px; width:100%; max-width:390px; text-align:center;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.55); animation:up .2s ease}
+.confirm-box .cb-ico{font-size:34px; margin-bottom:8px}
+.confirm-box .cb-msg{font-size:14.5px; line-height:1.85; color:var(--text); margin-bottom:16px; white-space:pre-wrap}
+.confirm-box .cb-row{display:flex; gap:9px}
+.confirm-box .cb-row .btn{flex:1}
+.cb-list{max-height:56vh; overflow:auto}
+@media(max-width:360px){ nav.bottom button{font-size:9.5px} .kpi b{font-size:18px} }
 </style>
 </head>
 <body>
-<div id="lg" class="lg"><form id="lf" class="lc"><div class="logo">🏗️</div><h1>نظام إدارة الأعمال</h1><p>سجّل الدخول للمتابعة</p>
-<label>اسم المستخدم<input id="u" class="in" required autocomplete="username"></label>
-<label>كلمة المرور<input id="p" type="password" class="in" required autocomplete="current-password"></label>
-<button class="btn p" style="width:100%;justify-content:center">دخول</button></form></div>
-<div id="app" class="app"><aside id="sb" class="sb"><div class="brand">🏗️ <b>إدارة الأعمال</b></div><nav id="nav"></nav><div class="me" id="me"></div></aside>
-<main><header class="top"><button class="btn g bg" onclick="$('#sb').classList.toggle('open')" aria-label="القائمة">☰</button><h2 id="ttl"></h2></header><div id="view"></div></main></div>
-<div id="md" class="md"><div id="mc" class="mc"></div></div><div id="toasts"></div>
-<script>
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const ST={pending:'قيد الانتظار',inprogress:'قيد التنفيذ',completed:'مكتمل'};
-const BC={income:'ok',expense:'bad',low:'ok',medium:'',high:'warn',urgent:'bad',emergency:'bad'};
-// تعريف الأقسام: f = الحقول [المفتاح، التسمية، النوع، مطلوب، خيارات] — c = أعمدة الجدول
-const E={
-clients:{t:'العملاء',i:'👥',n:'عميل جديد',f:[['name','الاسم','text',1],['phone','الهاتف','tel',1],['email','البريد الإلكتروني','email'],['address','العنوان','text'],['notes','ملاحظات','area'],['files','المرفقات','files']],c:['name','phone','email','address']},
-projects:{t:'الإنشاءات',i:'🏗️',n:'مشروع جديد',st:1,f:[['clientId','العميل','client',1],['type','النوع','sel',1,{construction:'إنشاءات',installation:'تركيبات',renovation:'تجديد',other:'أخرى'}],['startDate','تاريخ البدء','date',1],['endDate','تاريخ الانتهاء','date'],['description','الوصف','area'],['before','صور قبل التنفيذ','img'],['after','صور بعد التنفيذ','img']],c:['clientId','type','startDate','status','imgs']},
-maintenance:{t:'الصيانة',i:'🛠️',n:'طلب صيانة',st:1,f:[['clientId','العميل','client',1],['type','النوع','sel',1,{preventive:'وقائية',corrective:'علاجية',emergency:'طارئة'}],['priority','الأولوية','sel',1,{low:'منخفضة',medium:'متوسطة',high:'عالية',urgent:'عاجلة'}],['date','التاريخ','date',1],['description','الوصف','area']],c:['clientId','type','priority','date','status']},
-finance:{t:'المالية',i:'💰',n:'سجل مالي',f:[['type','النوع','sel',1,{income:'إيراد',expense:'مصروف'}],['amount','المبلغ (جنيه)','number',1],['clientId','العميل','client'],['date','التاريخ','date',1],['description','الوصف','text'],['invoice','صورة الفاتورة','img']],c:['date','type','amount','clientId','description','imgs']},
-aftersales:{t:'ما بعد البيع',i:'🎧',n:'متابعة جديدة',f:[['clientId','العميل','client',1],['date','تاريخ المتابعة','date',1],['contactType','نوع التواصل','sel',0,{call:'اتصال',visit:'زيارة',email:'بريد'}],['rating','التقييم','sel',0,{5:'ممتاز',4:'جيد جداً',3:'جيد',2:'مقبول',1:'ضعيف'}],['notes','ملاحظات','area']],c:['clientId','date','contactType','rating','notes']},
-users:{t:'المستخدمون',i:'⚙️',n:'مستخدم جديد',adm:1,f:[['username','اسم المستخدم','text',1],['pass','كلمة المرور','pw'],['role','الدور','sel',1,{user:'مستخدم',admin:'مدير'}]],c:['username','role','createdAt']}};
-const D={};let me=null,cur='dashboard';
-const KEYS=[...Object.keys(E),'activities'];
-const load=()=>KEYS.forEach(k=>{try{D[k]=JSON.parse(localStorage.getItem(k))||[]}catch(e){D[k]=[]}});
-const save=k=>{try{localStorage.setItem(k,JSON.stringify(D[k]))}catch(e){toast('مساحة التخزين ممتلئة — استخدم صوراً أقل','err')}};
-const hash=async s=>!(window.crypto&&crypto.subtle)?'x'+[...s].reduce((h,c)=>(h*33^c.charCodeAt(0))>>>0,5381).toString(16):[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
-function toast(m,t){const e=document.createElement('div');e.className='toast '+(t||'');e.textContent=m;$('#toasts').append(e);setTimeout(()=>e.remove(),3000)}
-function log(text){D.activities.unshift({text,date:new Date().toISOString()});D.activities=D.activities.slice(0,50);save('activities')}
-const cn=id=>D.clients.find(c=>c.id==id)?.name||'—';
-const opts=(m,s)=>Object.entries(m).map(([a,b])=>`<option value="${a}"${a==s?' selected':''}>${b}</option>`).join('');
-const sum=t=>D.finance.filter(f=>f.type===t).reduce((a,f)=>a+(+f.amount||0),0);
-const fm=n=>n.toLocaleString('ar-EG')+' جنيه';
-const fld=(en,k)=>E[en].f.find(x=>x[0]===k);
-function cell(en,k,r){const v=r[k],f=fld(en,k),t=f?f[2]:'';
- if(k==='status')return`<select class="in sm" onchange="setSt('${en}',${r.id},this.value)">${opts(ST,v||'pending')}</select>`;
- if(k==='imgs')return(n=>n?`<span class="b">📷 ${n}</span>`:'—')(['before','after','invoice'].reduce((a,x)=>a+(r[x]?.length||0),0));
- if(t==='client')return esc(cn(v));
- if(t==='sel'){const l=esc(f[4][v]||v);return v in BC?`<span class="b ${BC[v]}">${l}</span>`:l}
- if(t==='img')return v?.length?`<span class="b">📷 ${v.length}</span>`:'—';
- if(t==='date'||k==='createdAt')return v?new Date(v).toLocaleDateString('ar-EG'):'—';
- if(k==='amount')return fm(+v);
- return esc(v)||'—'}
-const lbl=(en,k)=>k==='status'?'الحالة':k==='imgs'?'الصور':k==='createdAt'?'تاريخ الإنشاء':fld(en,k)[1];
-function show(k){cur=k;$$('.nv').forEach(b=>b.classList.toggle('on',b.dataset.k===k));$('#sb').classList.remove('open');
- $('#ttl').textContent=k==='dashboard'?'لوحة التحكم':E[k].t;k==='dashboard'?dash():list(k)}
-function dash(){const inc=sum('income'),exp=sum('expense'),pr=D.projects;
- $('#view').innerHTML=`<div class="st">${[['العملاء',D.clients.length],['مشاريع جارية',pr.filter(p=>p.status!=='completed').length],['مشاريع مكتملة',pr.filter(p=>p.status==='completed').length],['صيانة مفتوحة',D.maintenance.filter(m=>m.status!=='completed').length]].map(([l,n])=>`<div class="sc"><b>${n}</b><span>${l}</span></div>`).join('')}</div>
- <div class="st"><div class="sc"><b>${fm(inc)}</b><span>الإيرادات</span></div><div class="sc"><b>${fm(exp)}</b><span>المصروفات</span></div><div class="sc hi"><b>${fm(inc-exp)}</b><span>صافي الربح</span></div></div>
- <h3 class="h3">آخر النشاطات</h3><ul class="act">${D.activities.slice(0,8).map(a=>`<li><span>${esc(a.text)}</span><small>${new Date(a.date).toLocaleString('ar-EG')}</small></li>`).join('')||'<li class="em">لا توجد نشاطات بعد</li>'}</ul>`}
-function list(en){const c=E[en];
- $('#view').innerHTML=`${en==='finance'?`<div class="st"><div class="sc"><b>${fm(sum('income'))}</b><span>إيرادات</span></div><div class="sc"><b>${fm(sum('expense'))}</b><span>مصروفات</span></div></div>`:''}
- <div class="bar"><input id="q" class="in" type="search" placeholder="بحث..." oninput="rows('${en}')"><button class="btn p" onclick="edit('${en}')">＋ ${c.n}</button></div>
- <div class="tw"><table><thead><tr>${c.c.map(k=>`<th>${lbl(en,k)}</th>`).join('')}<th>إجراءات</th></tr></thead><tbody id="tb"></tbody></table></div>`;rows(en)}
-function rows(en){const c=E[en],q=($('#q')?.value||'').trim().toLowerCase();
- const rs=D[en].filter(r=>!q||(c.f.filter(f=>!['img','pw','files'].includes(f[2])).map(f=>f[2]==='client'?cn(r[f[0]]):r[f[0]]).join(' ')).toLowerCase().includes(q));
- $('#tb').innerHTML=rs.map(r=>`<tr>${c.c.map(k=>`<td>${cell(en,k,r)}</td>`).join('')}<td class="ac"><button class="btn g s" title="تفاصيل" onclick="info('${en}',${r.id})">👁</button><button class="btn g s" title="تعديل" onclick="edit('${en}',${r.id})">✏️</button>${me.role==='admin'?`<button class="btn d s" title="حذف" onclick="del('${en}',${r.id})">🗑</button>`:''}</td></tr>`).join('')||`<tr><td colspan="9" class="em">${q?'لا نتائج مطابقة':`لا توجد سجلات بعد — اضغط «${c.n}» للبدء`}</td></tr>`}
-function info(en,id){const c=E[en],r=D[en].find(x=>x.id===id);
- $('#mc').innerHTML=`<h3>التفاصيل</h3><dl>${c.f.filter(f=>!['img','pw','files'].includes(f[2])).map(f=>`<dt>${f[1]}</dt><dd>${cell(en,f[0],r)}</dd>`).join('')}${c.st?`<dt>الحالة</dt><dd>${ST[r.status||'pending']}</dd>`:''}</dl>
- ${c.f.filter(f=>f[2]==='img'&&r[f[0]]?.length).map(f=>`<h4>${f[1]}</h4><div class="gal">${r[f[0]].map(s=>`<img src="${s}" alt="" onclick="zoom(this.src)" style="cursor:zoom-in">`).join('')}</div>`).join('')}
- <div class="row"><button class="btn g" onclick="closeM()">إغلاق</button></div>`;$('#md').classList.add('on')}
-const fi=(k,t,rq,o,v)=>{const a=`name="${k}"${rq?' required':''} class="in"`;
- if(t==='area')return`<textarea ${a} rows="3">${esc(v)}</textarea>`;
- if(t==='sel')return`<select ${a}>${opts(o,v)}</select>`;
- if(t==='client')return`<select ${a}><option value="">${rq?'اختر العميل':'عام'}</option>${D.clients.map(c=>`<option value="${c.id}"${c.id==v?' selected':''}>${esc(c.name)}</option>`).join('')}</select>`;
- if(t==='files')return`<div class="row" style="flex-wrap:wrap">${[['img','🖼️ صور'],['doc','📄 مستندات'],['pdf','📕 PDF']].map(([x,l])=>`<button type="button" class="btn g" onclick="pick('${x}',addPend)">${l}</button>`).join('')}</div><div id="pl"></div>${v?.length?`<small>${v.length} مرفق محفوظ — الجديدة تُضاف إليها</small>`:''}`;
- if(t==='img')return`<input ${a} type="file" accept="image/*" multiple>${v?.length?`<small>${v.length} صورة محفوظة — اختيار صور جديدة يستبدلها</small>`:''}`;
- if(t==='pw')return`<input name="${k}" class="in" type="password" autocomplete="new-password"${v?' placeholder="اتركها فارغة للإبقاء على الحالية"':' required'}>`;
- return`<input ${a} type="${t}" value="${esc(v)}">`};
-const pack=f=>new Promise(res=>{const r=new FileReader();r.onload=e=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.7))};im.onerror=()=>res('');im.src=e.target.result};r.readAsDataURL(f)});
-function edit(en,id){pend=[];const c=E[en],r=D[en].find(x=>x.id===id)||{};
- $('#mc').innerHTML=`<h3>${id?'تعديل':c.n}</h3><form id="fm" class="fg">${c.f.map(([k,l,t,rq,o])=>`<${t==='files'?'div':'label'} class="${['area','img','files'].includes(t)?'w':''}">${l}${rq?' *':''}${fi(k,t,rq,o,r[k])}</${t==='files'?'div':'label'}>`).join('')}<div class="w row"><button class="btn p">حفظ</button><button type="button" class="btn g" onclick="closeM()">إلغاء</button></div></form>`;
- $('#md').classList.add('on');
- $('#fm').onsubmit=async e=>{e.preventDefault();const fd=new FormData(e.target),o=id?r:{id:Date.now(),createdAt:new Date().toISOString(),status:'pending'};
-  for(const [k,,t] of c.f){
-   if(t==='img'){const fs=[...e.target[k].files];if(fs.length)o[k]=(await Promise.all(fs.map(pack))).filter(Boolean)}
-   else if(t==='files')await attach(o,pend);
-   else if(t==='pw'){const v=fd.get(k);if(v)o[k]=await hash(v)}
-   else o[k]=t==='number'?+fd.get(k):String(fd.get(k)||'').trim()}
-  if(en==='users'&&D.users.some(u=>u.username===o.username&&u.id!==o.id))return toast('اسم المستخدم مستخدم بالفعل','err');
-  if(!id)D[en].push(o);save(en);log((id?'تعديل: ':'إضافة: ')+c.t);closeM();show(cur);toast('تم الحفظ');if(en==='clients')profile(o.id)}}
-function setSt(en,id,v){const r=D[en].find(x=>x.id===id);r.status=v;save(en);log('تحديث الحالة إلى «'+ST[v]+'»');toast('تم تحديث الحالة')}
-function del(en,id){if(en==='users'&&id===me.id)return toast('لا يمكن حذف حسابك الحالي','err');
- ask('هل أنت متأكد من الحذف؟ لا يمكن التراجع.',()=>{(D[en].find(x=>x.id===id)?.files||[]).forEach(f=>fdel(f.id).catch(()=>0));D[en]=D[en].filter(x=>x.id!==id);save(en);log('حذف: '+E[en].t);closeM();show(cur);toast('تم الحذف')})}
-function closeM(){$('#md').classList.remove('on')}
-$('#md').onclick=e=>{if(e.target.id==='md')closeM()};document.onkeydown=e=>{if(e.key==='Escape')closeM()};
-function theme(){const d=document.documentElement,dk=d.dataset.theme?d.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches,t=dk?'light':'dark';d.dataset.theme=t;try{localStorage.setItem('theme',t)}catch(e){}}
-function logout(){try{localStorage.removeItem('sess')}catch(e){}location.reload()}
-function start(){$('#lg').style.display='none';$('#app').classList.add('on');
- $('#nav').innerHTML=[['dashboard','🏠','الرئيسية'],...Object.entries(E).filter(([k,v])=>!v.adm||me.role==='admin').map(([k,v])=>[k,v.i,v.t])].map(([k,i,t])=>`<button class="nv" data-k="${k}" onclick="show('${k}')">${i} ${t}</button>`).join('')+`<button class="nv" onclick="theme()">🌓 الوضع الليلي</button><button class="nv" onclick="logout()">🚪 تسجيل الخروج</button>`;
- $('#me').textContent=me.username+' — '+(me.role==='admin'?'مدير':'مستخدم');show('dashboard')}
-$('#lf').onsubmit=async e=>{e.preventDefault();const u=$('#u').value.trim(),h=await hash($('#p').value),x=D.users.find(x=>x.username===u&&x.pass===h);
- if(!x)return toast('اسم المستخدم أو كلمة المرور غير صحيحة','err');me=x;try{localStorage.setItem('sess',x.id)}catch(e){}log('تسجيل دخول: '+u);start()};
-(async()=>{load();
- if(!D.users.length){const t=new Date().toISOString();D.users=[{id:1,username:'admin',pass:await hash('admin'),role:'admin',createdAt:t},{id:2,username:'user',pass:await hash('user'),role:'user',createdAt:t}];save('users')}
- try{const t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;me=D.users.find(u=>String(u.id)===localStorage.getItem('sess'))}catch(e){}
- if(me)start()})();
 
-async function attach(o,fs){o.files=o.files||[];for(const f of fs){if(f.size>15e6){toast(f.name+' أكبر من 15 م.ب','err');continue}const fid='f'+Date.now()+Math.random().toString(36).slice(2,6);try{await fput(fid,f);o.files.push({id:fid,name:f.name,type:f.type||'',size:f.size,date:new Date().toISOString()})}catch(e){toast('تعذّر حفظ '+f.name+' — المساحة ممتلئة','err')}}}
-let pend=[];
-const ACC={img:'image/*',doc:'.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.rtf,.odt',pdf:'application/pdf,.pdf'};
-function pick(kind,cb){const i=document.createElement('input');i.type='file';i.multiple=true;i.accept=ACC[kind];i.style.display='none';i.onchange=()=>{cb([...i.files]);i.remove()};document.body.append(i);i.click()}
-function showPend(){const e=$('#pl');if(e)e.innerHTML=pend.map((f,i)=>`<div class="fr"><span class="fn">${ico(f.type||'')} ${esc(f.name)}</span><small>${Math.max(1,Math.round(f.size/1024))} ك.ب</small><button type="button" class="btn d s" onclick="pend.splice(${i},1);showPend()">✕</button></div>`).join('')}
-const addPend=fs=>{pend.push(...fs);showPend()};
-// ===== مرفقات العملاء (تُحفظ في IndexedDB) =====
-const toURL=b=>new Promise(r=>{const x=new FileReader();x.onload=()=>r(x.result);x.readAsDataURL(b)});
-const toBlob=d=>{const [h,b]=d.split(','),t=(h.match(/:(.*?);/)||[])[1]||'',a=atob(b),u=new Uint8Array(a.length);for(let i=0;i<a.length;i++)u[i]=a.charCodeAt(i);return new Blob([u],{type:t})};
-const TO=(p,ms=2500)=>Promise.race([p,new Promise((_,no)=>setTimeout(()=>no(new Error('timeout')),ms))]);
-let idb;try{idb=new Promise((ok,no)=>{const r=indexedDB.open('bizfiles',1);r.onupgradeneeded=()=>r.result.createObjectStore('f');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}catch(e){idb=Promise.reject(e)}
-idb.catch(()=>0);
-const tx=async(m,fn)=>{const d=await idb;return new Promise((ok,no)=>{const t=d.transaction('f',m),q=fn(t.objectStore('f'));t.oncomplete=()=>ok(q&&q.result);t.onerror=()=>no(t.error)})};
-async function fput(id,b){try{await TO(tx('readwrite',s=>s.put(b,id)))}catch(e){localStorage.setItem('file:'+id,await toURL(b))}}
-async function fget(id){const d=localStorage.getItem('file:'+id);if(d)return toBlob(d);return TO(tx('readonly',s=>s.get(id)))}
-const fdel=id=>{try{localStorage.removeItem('file:'+id)}catch(e){}return TO(tx('readwrite',s=>s.delete(id))).catch(()=>0)};
-addEventListener('error',e=>toast('خطأ: '+e.message,'err'));
-const ico=t=>t.startsWith('image/')?'🖼️':t==='application/pdf'?'📕':'📄';
-function ask(m,yes,no){$('#mc').innerHTML=`<h3>${m}</h3><div class="row"><button class="btn d" id="y">حذف</button><button class="btn g" id="n">إلغاء</button></div>`;$('#md').classList.add('on');$('#y').onclick=yes;$('#n').onclick=no||closeM}
-function zoom(src){$('#mc').innerHTML=`<img src="${src}" alt="" style="width:100%;border-radius:10px"><div class="row"><button class="btn g" onclick="closeM()">إغلاق</button></div>`;$('#md').classList.add('on')}
-function profile(id){const c=D.clients.find(x=>x.id===id),f=k=>c[k]?esc(c[k]):'—',
- pj=D.projects.filter(p=>p.clientId==id).length,mt=D.maintenance.filter(m=>m.clientId==id).length,
- pay=D.finance.filter(x=>x.clientId==id&&x.type==='income').reduce((a,x)=>a+(+x.amount||0),0);
- $('#mc').innerHTML=`<h3>ملف العميل: ${esc(c.name)}</h3>
- <dl><dt>الهاتف</dt><dd>${f('phone')}</dd><dt>البريد</dt><dd>${f('email')}</dd><dt>العنوان</dt><dd>${f('address')}</dd><dt>ملاحظات</dt><dd>${f('notes')}</dd>
- <dt>المشاريع</dt><dd>${pj}</dd><dt>طلبات الصيانة</dt><dd>${mt}</dd><dt>إجمالي المدفوعات</dt><dd>${fm(pay)}</dd></dl>
- <div class="row"><button class="btn p" onclick="edit('clients',${id})">✏️ تعديل البيانات</button></div>
- <h4 class="h3">المرفقات</h4><div id="fl"></div>
- <div class="row" style="flex-wrap:wrap">${[['img','🖼️ صور'],['doc','📄 مستندات'],['pdf','📕 PDF']].map(([x,l])=>`<button type="button" class="btn g" onclick="pick('${x}',fs=>addFiles(${id},fs))">${l}</button>`).join('')}</div>
- <div class="row"><button class="btn g" onclick="closeM()">إغلاق</button></div>`;
- $('#md').classList.add('on');files(id)}
-function files(id){const c=D.clients.find(x=>x.id===id);
- $('#fl').innerHTML=(c.files||[]).map(f=>`<div class="fr"><span class="fn" onclick="openF(${id},'${f.id}')">${ico(f.type)} ${esc(f.name)}</span><small>${Math.max(1,Math.round(f.size/1024))} ك.ب</small><button class="btn g s" onclick="openF(${id},'${f.id}')">فتح</button>${me.role==='admin'?`<button class="btn d s" onclick="delF(${id},'${f.id}')">🗑</button>`:''}</div>`).join('')||'<small>لا توجد مرفقات بعد</small>'}
-async function addFiles(id,fs){const c=D.clients.find(x=>x.id===id);c.files=c.files||[];
- for(const f of fs){if(f.size>15e6){toast(f.name+' أكبر من 15 م.ب','err');continue}
-  const fid='f'+Date.now()+Math.random().toString(36).slice(2,6);
-  try{await fput(fid,f);c.files.push({id:fid,name:f.name,type:f.type||'',size:f.size,date:new Date().toISOString()})}catch(e){toast('تعذّر حفظ '+f.name+' — الملف كبير أو المساحة ممتلئة','err')}}
- save('clients');log('مرفقات جديدة: '+c.name);files(id);toast('تمت إضافة المرفقات')}
-async function openF(cid,fid){const c=D.clients.find(x=>x.id===cid),m=c.files.find(f=>f.id===fid);let b;try{b=await fget(fid)}catch(e){}
- if(!b)return toast('الملف غير موجود','err');const u=await toURL(b),t=m.type;
- $('#mc').innerHTML=`<h3>${esc(m.name)}</h3>${t.startsWith('image/')?`<img src="${u}" alt="" style="width:100%;border-radius:10px">`:t==='application/pdf'?`<iframe src="${u}" style="width:100%;height:65dvh;border:0;border-radius:10px"></iframe>`:t.startsWith('text/')?'<pre id="tx" style="white-space:pre-wrap"></pre>':'<p class="em">لا توجد معاينة لهذا النوع من الملفات.</p>'}
- <div class="row"><a class="btn p" href="${u}" download="${esc(m.name)}" target="_blank">⬇ تنزيل / فتح في تبويب</a><button class="btn g" onclick="profile(${cid})">رجوع</button></div>`;
- $('#md').classList.add('on');if(t.startsWith('text/'))b.text().then(x=>$('#tx').textContent=x)}
-function delF(cid,fid){ask('حذف هذا المرفق؟',()=>{const c=D.clients.find(x=>x.id===cid);c.files=c.files.filter(f=>f.id!==fid);save('clients');fdel(fid).catch(()=>0);profile(cid);toast('تم حذف المرفق')},()=>profile(cid))}
-const _info=info;info=function(en,id){if(en==='clients')return profile(id);_info(en,id);$('#mc .row').insertAdjacentHTML('afterbegin',`<button class="btn p" onclick="edit('${en}',${id})">✏️ تعديل</button>`)};
-if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>0));
-try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+<div id="appWrap">
+<header>
+  <button class="hbtn" id="backBtn" style="display:none" onclick="goBack()">‹ رجوع</button>
+  <h1 id="screenTitle">يوميات العملاء</h1>
+  <button class="hbtn" id="lockBtn" style="display:none" onclick="Auth.lock('manual')" title="قفل التطبيق">🔒</button>
+  <button class="hbtn" id="searchBtn" onclick="focusSearch()">🔍</button>
+</header>
+
+<main id="main"></main>
+
+<button class="fab" id="fab" onclick="fabAction()">+</button>
+
+<nav class="bottom" id="tabbar">
+  <button data-tab="upcoming" class="active" onclick="setTab('upcoming')"><span class="ic">⏰</span>القادمة<span class="badge" id="bUp" style="display:none">0</span></button>
+  <button data-tab="clients" onclick="setTab('clients')"><span class="ic">👥</span>العملاء</button>
+  <button data-tab="visits" onclick="setTab('visits')"><span class="ic">📋</span>الزيارات</button>
+  <button data-tab="attach" onclick="setTab('attach')"><span class="ic">📎</span>المرفقات<span class="badge" id="attTabBadge" style="display:none">0</span></button>
+  <button data-tab="data" onclick="setTab('data')"><span class="ic">⚙️</span>بياناتي</button>
+</nav>
+</div>
+
+<!-- شاشة كلمة المرور -->
+<div id="lockScreen" class="lock" style="display:none">
+  <div class="lock-card">
+    <div class="lock-logo">🔐</div>
+    <h2 id="lockTitle">يوميات العملاء</h2>
+    <p class="lock-sub" id="lockSub"></p>
+    <div class="lock-field">
+      <input id="lockPass" type="password" placeholder="كلمة المرور" autocomplete="current-password">
+      <button class="eye" id="lockEye" type="button" title="إظهار / إخفاء">👁️</button>
+    </div>
+    <div id="lockSetup" style="display:none">
+      <div class="lock-field"><input id="lockPass2" type="password" placeholder="تأكيد كلمة المرور" autocomplete="new-password"></div>
+      <div class="lock-field"><input id="lockHint" type="text" placeholder="تلميح لتذكّرها (اختياري)"></div>
+    </div>
+    <div class="lock-err" id="lockErr"></div>
+    <div class="lock-row" id="lockRemember" style="display:none">
+      <input type="checkbox" id="lockRememberBox"><span>تذكّرني على هذا الجهاز لمدة 7 أيام</span>
+    </div>
+    <button class="btn block" id="lockGo" type="button">دخول</button>
+    <button class="btn block ghost" id="lockForgot" type="button" style="margin-top:8px;display:none">نسيت كلمة المرور؟</button>
+    <div class="lock-note" id="lockNote"></div>
+  </div>
+</div>
+
+<div id="modalRoot"></div>
+<div id="confirmRoot"></div>
+<input type="file" id="hiddenCam" accept="image/*" capture="environment" multiple style="display:none">
+<input type="file" id="hiddenFile" multiple style="display:none">
+<script>
+/* ============================================================
+   يوميات العملاء — تطبيق محلي يعمل بدون إنترنت
+   البيانات تُخزَّن على الجهاز فقط (IndexedDB / localStorage)
+   ============================================================ */
+
+/* ---------- 1) طبقة التخزين ---------- */
+const Store = (function () {
+  const DB_NAME = 'clients_diary_db', DB_VER = 1, STORE = 'kv';
+  let db = null, mode = 'idb';
+  const LS = () => window.localStorage;
+
+  function openIdb() {
+    return new Promise((resolve, reject) => {
+      if (!window.indexedDB) return reject(new Error('no idb'));
+      let req;
+      try { req = indexedDB.open(DB_NAME, DB_VER); } catch (e) { return reject(e); }
+      req.onupgradeneeded = () => { if (!req.result.objectStoreNames.contains(STORE)) req.result.createObjectStore(STORE); };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error || new Error('idb error'));
+      req.onblocked = () => reject(new Error('idb blocked'));
+      setTimeout(() => reject(new Error('idb timeout')), 2500);
+    });
+  }
+
+  async function init() {
+    let force = '';
+    try { force = new URLSearchParams(location.search).get('store') || ''; } catch (e) {}
+    if (force === 'mem') { mode = 'mem'; return mode; }
+    if (force === 'ls') { mode = 'ls'; return mode; }
+    try {
+      db = await openIdb();
+      await testWrite();
+      mode = 'idb';
+    } catch (e) {
+      db = null;
+      try { LS().setItem('cd_test', '1'); LS().removeItem('cd_test'); mode = 'ls'; }
+      catch (e2) { mode = 'mem'; }
+    }
+    return mode;
+  }
+
+  function testWrite() {
+    return new Promise((resolve, reject) => {
+      try {
+        const tx = db.transaction(STORE, 'readwrite');
+        tx.objectStore(STORE).put('1', '__t');
+        tx.oncomplete = () => resolve(); tx.onerror = () => reject(tx.error);
+      } catch (e) { reject(e); }
+    });
+  }
+
+  function tget(key) {
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readonly');
+      const r = tx.objectStore(STORE).get(key);
+      r.onsuccess = () => resolve(r.result);
+      r.onerror = () => reject(r.error);
+    });
+  }
+  function tput(key, val) {
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).put(val, key);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+  function tdel(key) {
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).delete(key);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+
+  const mem = {};
+  async function get(key, def) {
+    if (mode === 'idb' && db) {
+      try { const v = await tget(key); return v === undefined ? def : v; }
+      catch (e) { console.warn('get fail', key, e); mode = 'mem'; }
+    }
+    if (mode === 'ls') {
+      try { const s = LS().getItem('cd_' + key); return s === null ? def : JSON.parse(s); }
+      catch (e2) { mode = 'mem'; }
+    }
+    return key in mem ? mem[key] : def;
+  }
+  async function set(key, val) {
+    mem[key] = val;
+    if (mode === 'idb' && db) {
+      try { return await tput(key, val); }
+      catch (e) { console.warn('set fail', key, e); mode = 'mem'; }
+    }
+    if (mode === 'ls') {
+      try { LS().setItem('cd_' + key, JSON.stringify(val)); return; }
+      catch (e2) { mode = 'mem'; }
+    }
+  }
+  async function del(key) {
+    delete mem[key];
+    if (mode === 'idb' && db) {
+      try { return await tdel(key); }
+      catch (e) { console.warn('del fail', key, e); mode = 'mem'; }
+    }
+    if (mode === 'ls') {
+      try { LS().removeItem('cd_' + key); return; }
+      catch (e2) { mode = 'mem'; }
+    }
+  }
+  function getMode() { return mode; }
+  return { init, get, set, del, getMode };
+})();
+
+/* ---------- 2) حالة التطبيق ---------- */
+const state = {
+  tab: 'upcoming',
+  clients: [],
+  visits: [],
+  search: '',
+  stack: [],          // للرجوع بين الشاشات
+  view: { name: 'root' },
+  pendingFiles: [],   // مرفقات لم تُحفظ بعد (داخل نموذج)
+  editVisitId: null,
+  editClientId: null,
+  attCounts: {},      // عدّاد المرفقات لكل عميل/زيارة
+  attTotal: 0,
+  attList: [],        // كل المرفقات (لتبويب المرفقات)
+  attDirty: true,
+  attLoading: false,
+  attFilterClient: '',
+  attSearch: '',
+  attKind: 'all'
+};
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+/* ---------- 3) أدوات مساعدة ---------- */
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function todayISO() { const d = new Date(); return d.toISOString().slice(0, 10); }
+function fmtDate(iso) {
+  if (!iso) return '—';
+  const p = String(iso).slice(0, 10).split('-');
+  if (p.length !== 3) return iso;
+  const months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+  return `${+p[2]} ${months[+p[1] - 1]} ${p[0]}`;
+}
+function dayDiff(iso) {
+  if (!iso) return null;
+  const a = new Date(todayISO() + 'T00:00:00');
+  const b = new Date(String(iso).slice(0, 10) + 'T00:00:00');
+  return Math.round((b - a) / 86400000);
+}
+function relDay(iso) {
+  const d = dayDiff(iso);
+  if (d === null) return '';
+  if (d === 0) return 'اليوم';
+  if (d === 1) return 'غدًا';
+  if (d === -1) return 'أمس';
+  if (d > 1) return `بعد ${d} يوم`;
+  return `متأخر ${Math.abs(d)} يوم`;
+}
+function fmtSize(b) {
+  if (!b && b !== 0) return '';
+  if (b < 1024) return b + ' بايت';
+  if (b < 1048576) return (b / 1024).toFixed(0) + ' ك.ب';
+  return (b / 1048576).toFixed(2) + ' م.ب';
+}
+function initials(name) {
+  const t = String(name || '?').trim().split(/\s+/);
+  return (t[0] ? t[0][0] : '?') + (t[1] ? t[1][0] : '');
+}
+function toast(msg, ms) {
+  const el = document.createElement('div');
+  el.textContent = msg;
+  el.style.cssText = 'position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;' +
+    'padding:10px 16px;border-radius:12px;font-size:13.5px;z-index:999;max-width:86vw;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.3)';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), ms || 2600);
+}
+/* نافذة تأكيد داخلية احترافية (بدل نافذة المتصفح) */
+function askConfirm(msg, okLabel, danger) {
+  return new Promise(resolve => {
+    const root = document.getElementById('confirmRoot');
+    root.innerHTML = `<div class="confirm-box">
+        <div class="cb-ico">${danger === false ? '❓' : '⚠️'}</div>
+        <div class="cb-msg">${esc(msg)}</div>
+        <div class="cb-row">
+          <button class="btn ghost" id="cNo" type="button">إلغاء</button>
+          <button class="btn ${danger === false ? '' : 'red'}" id="cYes" type="button">${esc(okLabel || 'تأكيد')}</button>
+        </div></div>`;
+    root.classList.add('show');
+    const done = (v) => { root.classList.remove('show'); root.innerHTML = ''; resolve(v); };
+    document.getElementById('cYes').onclick = () => done(true);
+    document.getElementById('cNo').onclick = () => done(false);
+    root.onclick = (e) => { if (e.target === root) done(false); };
+  });
+}
+function confirmBox(msg) { return window.confirm(msg); }
+
+/* ---------- 4) جوجل ماب ---------- */
+function mapsQuery(c) {
+  if (!c) return '';
+  const link = (c.mapLink || '').trim();
+  if (link) {
+    // استخراج الإحداثيات إن وُجدت داخل الرابط
+    const m = link.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) || link.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/);
+    if (m) return m[1] + ',' + m[2];
+    const mq = link.match(/[?&]query=([^&]+)/);
+    if (mq) return decodeURIComponent(mq[1].replace(/\+/g, ' '));
+    const mq2 = link.match(/[?&]q=([^&]+)/);
+    if (mq2) return decodeURIComponent(mq2[1].replace(/\+/g, ' ')).replace(/^\s*place\s*\/?/i, '').replace(/\/@.*$/, '');
+  }
+  if (c.lat && c.lng) return c.lat + ',' + c.lng;
+  const addr = (c.address || '').trim();
+  if (addr) return addr;
+  return '';
+}
+function mapsUrl(c) {
+  const link = (c.mapLink || '').trim();
+  const q = mapsQuery(c);
+  if (q) return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+  if (link) return link;
+  return '';
+}
+function dirUrl(c) {
+  const link = (c.mapLink || '').trim();
+  const q = mapsQuery(c);
+  if (q) return 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(q);
+  if (link) return link;
+  return '';
+}
+function telUrl(p) { return 'tel:' + String(p || '').replace(/[^\d+]/g, ''); }
+function waUrl(p) {
+  let n = String(p || '').replace(/[^\d]/g, '');
+  if (!n) return '';
+  if (n.startsWith('00')) n = n.slice(2);
+  return 'https://wa.me/' + n;
+}
+
+/* ---------- 5) المرفقات ---------- */
+function readAsDataURL(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = () => rej(r.error);
+    r.readAsDataURL(file);
+  });
+}
+function compressImage(file, maxDim, quality) {
+  maxDim = maxDim || 1400; quality = quality || 0.72;
+  return new Promise(async (resolve) => {
+    try {
+      const dataUrl = await readAsDataURL(file);
+      const img = new Image();
+      img.onload = () => {
+        try {
+          let w = img.width, h = img.height;
+          if (Math.max(w, h) > maxDim) {
+            const s = maxDim / Math.max(w, h);
+            w = Math.round(w * s); h = Math.round(h * s);
+          }
+          const cv = document.createElement('canvas');
+          cv.width = w; cv.height = h;
+          cv.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(cv.toDataURL('image/jpeg', quality));
+        } catch (e) { resolve(dataUrl); }
+      };
+      img.onerror = () => resolve(dataUrl);
+      img.src = dataUrl;
+    } catch (e) { resolve(null); }
+  });
+}
+async function fileToAttachment(file) {
+  const isImg = /^image\//.test(file.type || '');
+  let data;
+  if (isImg) data = await compressImage(file);
+  else data = await readAsDataURL(file);
+  if (!data) return null;
+  const size = Math.round(data.length * 0.75);
+  return { id: uid(), name: file.name || ('مرفق-' + Date.now()), type: file.type || 'application/octet-stream', size, data, createdAt: Date.now(), isImg };
+}
+async function saveAttachments(ownerType, ownerId, list) {
+  for (const a of list) {
+    a.ownerType = ownerType; a.ownerId = ownerId;
+    await Store.set('att:' + a.id, a);
+  }
+}
+async function attachmentsOf(ownerType, ownerId) {
+  const all = await Store.get('attachIndex', []);
+  const ids = all.filter(x => x.ownerType === ownerType && x.ownerId === ownerId).map(x => x.id);
+  const out = [];
+  for (const id of ids) { const a = await Store.get('att:' + id, null); if (a) out.push(a); }
+  out.sort((a, b) => a.createdAt - b.createdAt);
+  return out;
+}
+/* عدّادات المرفقات (تُستخدم في الشاشات والتبويب) */
+async function refreshAttCounts() {
+  const idx = await Store.get('attachIndex', []);
+  const m = {};
+  idx.forEach(x => { const k = x.ownerType + ':' + x.ownerId; m[k] = (m[k] || 0) + 1; });
+  state.attCounts = m; state.attTotal = idx.length; state.attDirty = true;
+  updateAttBadge();
+}
+function attCountOf(t, id) { return (state.attCounts || {})[t + ':' + id] || 0; }
+function clientAttCount(id) {
+  let n = attCountOf('client', id);
+  visitsOf(id).forEach(v => { n += attCountOf('visit', v.id); });
+  return n;
+}
+function updateAttBadge() {
+  const b = document.getElementById('attTabBadge');
+  if (!b) return;
+  const n = state.attTotal || 0;
+  b.style.display = n ? 'inline-block' : 'none';
+  b.textContent = n > 99 ? '99+' : n;
+}
+async function indexAdd(atts) {
+  const idx = await Store.get('attachIndex', []);
+  atts.forEach(a => idx.push({ id: a.id, ownerType: a.ownerType, ownerId: a.ownerId }));
+  await Store.set('attachIndex', idx);
+  await refreshAttCounts();
+}
+async function indexRemove(ids) {
+  const idx = await Store.get('attachIndex', []);
+  const kept = idx.filter(x => !ids.includes(x.id));
+  await Store.set('attachIndex', kept);
+  for (const id of ids) await Store.del('att:' + id);
+  await refreshAttCounts();
+}
+async function attachCount(ownerType, ownerId) {
+  const idx = await Store.get('attachIndex', []);
+  return idx.filter(x => x.ownerType === ownerType && x.ownerId === ownerId).length;
+}
+
+/* ---------- 6) عمليات البيانات ---------- */
+async function persistClients() { await Store.set('clients', state.clients); }
+async function persistVisits() { await Store.set('visits', state.visits); }
+function clientById(id) { return state.clients.find(c => c.id === id); }
+function visitsOf(clientId) {
+  return state.visits.filter(v => v.clientId === clientId)
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+}
+function lastVisitOf(clientId) { const v = visitsOf(clientId); return v.length ? v[0] : null; }
+function nextVisitOf(clientId) {
+  const list = state.visits.filter(v => v.clientId === clientId && v.nextDate)
+    .sort((a, b) => String(b.nextDate).localeCompare(String(a.nextDate)));
+  return list.length ? list[0] : null;
+}
+function upcomingList() {
+  const today = todayISO();
+  const out = [];
+  state.clients.forEach(c => {
+    const v = nextVisitOf(c.id);
+    if (v && v.nextDate) out.push({ client: c, date: v.nextDate, purpose: v.nextPurpose || v.purpose || '', overdue: v.nextDate < today });
+  });
+  return out.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+}
+function overdueCount() { return upcomingList().filter(u => u.overdue).length; }
+
+async function saveClient(data, id) {
+  if (id) {
+    const c = clientById(id);
+    Object.assign(c, data, { updatedAt: Date.now() });
+  } else {
+    const c = Object.assign({ id: uid(), createdAt: Date.now(), updatedAt: Date.now() }, data);
+    state.clients.push(c);
+    id = c.id;
+  }
+  state.clients.sort((a, b) => String(a.name).localeCompare(String(b.name), 'ar'));
+  await persistClients();
+  return id;
+}
+async function deleteClient(id) {
+  const vs = visitsOf(id);
+  const delIds = [];
+  for (const v of vs) { const a = await attachmentsOf('visit', v.id); a.forEach(x => delIds.push(x.id)); }
+  const ca = await attachmentsOf('client', id); ca.forEach(x => delIds.push(x.id));
+  await indexRemove(delIds);
+  state.visits = state.visits.filter(v => v.clientId !== id);
+  state.clients = state.clients.filter(c => c.id !== id);
+  await persistClients(); await persistVisits();
+}
+async function saveVisit(data, id) {
+  if (id) {
+    const v = state.visits.find(x => x.id === id);
+    Object.assign(v, data, { updatedAt: Date.now() });
+  } else {
+    state.visits.push(Object.assign({ id: uid(), createdAt: Date.now() }, data));
+  }
+  await persistVisits();
+}
+async function deleteVisit(id) {
+  const a = await attachmentsOf('visit', id);
+  await indexRemove(a.map(x => x.id));
+  state.visits = state.visits.filter(v => v.id !== id);
+  await persistVisits();
+}
+
+/* ---------- 7) التنقل ---------- */
+function setTab(t) {
+  state.tab = t; state.stack = []; state.view = { name: 'root' };
+  document.querySelectorAll('nav.bottom button').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
+  render();
+}
+function pushView(v) { state.stack.push(state.view); state.view = v; render(); }
+function goBack() {
+  if (state.stack.length) { state.view = state.stack.pop(); }
+  else { state.view = { name: 'root' }; }
+  render();
+}
+function render() {
+  const m = document.getElementById('main');
+  const v = state.view;
+  document.getElementById('backBtn').style.display = (state.stack.length || v.name !== 'root') ? 'inline-flex' : 'none';
+  document.getElementById('searchBtn').style.display = (v.name === 'clients' || (v.name === 'root' && state.tab === 'clients')) ? 'inline-flex' : 'none';
+  const showFab = (v.name === 'root' && (state.tab === 'upcoming' || state.tab === 'clients')) || v.name === 'client';
+  document.getElementById('fab').style.display = showFab ? 'flex' : 'none';
+  if (v.name === 'visit' && state.editVisitId) setTimeout(() => loadVisitAtts(state.editVisitId), 0);
+  const bUp = document.getElementById('bUp');
+  const oc = overdueCount();
+  bUp.style.display = oc ? 'inline-block' : 'none';
+  bUp.textContent = oc;
+
+  let title = 'يوميات العملاء';
+  if (v.name === 'client') { const c = clientById(v.id); title = c ? c.name : 'عميل'; }
+  else if (v.name === 'newClient') title = 'عميل جديد';
+  else if (v.name === 'editClient') title = 'تعديل العميل';
+  else if (v.name === 'visit') title = 'زيارة جديدة';
+  else if (state.tab === 'upcoming') title = 'المواعيد القادمة';
+  else if (state.tab === 'clients') title = 'العملاء';
+  else if (state.tab === 'visits') title = 'سجل الزيارات';
+  else if (state.tab === 'attach') title = 'كل المرفقات';
+  else if (state.tab === 'data') title = 'بياناتي والنسخ الاحتياطي';
+  document.getElementById('screenTitle').textContent = title;
+
+  m.innerHTML = '';
+  if (v.name === 'client') m.innerHTML = viewClient(v.id);
+  else if (v.name === 'newClient' || v.name === 'editClient') m.innerHTML = viewClientForm(v.name === 'editClient' ? v.id : null);
+  else if (v.name === 'visit') m.innerHTML = viewVisitForm(v.clientId, state.editVisitId);
+  else if (state.tab === 'upcoming') m.innerHTML = viewUpcoming();
+  else if (state.tab === 'clients') m.innerHTML = viewClients();
+  else if (state.tab === 'visits') m.innerHTML = viewVisits();
+  else if (state.tab === 'attach') m.innerHTML = viewAttach();
+  else if (state.tab === 'data') m.innerHTML = viewData();
+
+  if (v.name === 'client') loadClientAttachments(v.id);
+  if (v.name === 'visit') renderPending();
+  if (state.tab === 'attach' && v.name === 'root') loadAttachList();
+  updateAttBadge();
+  Auth.syncUI();
+  window.scrollTo(0, 0);
+}
+
+/* فتح ملف العميل من أي قائمة (بطاقات القوائم/المواعيد/المرفقات) */
+function openClient(id) {
+  const c = clientById(id);
+  if (!c) { toast('تعذّر العثور على العميل'); return; }
+  pushView({ name: 'client', id: id });
+}
+
+/* ---------- 8) شاشة المواعيد القادمة ---------- */
+function viewUpcoming() {
+  const list = upcomingList();
+  const overdue = list.filter(u => u.overdue);
+  const today = list.filter(u => !u.overdue && u.date === todayISO());
+  const later = list.filter(u => !u.overdue && u.date > todayISO());
+  if (!list.length) {
+    return `<div class="empty"><span class="big">⏰</span>لا توجد مواعيد زيارة قادمة بعد.<br>
+      أضف عميلًا ثم سجّل زيارة وحدّد «الزيارة القادمة» ليظهر هنا تلقائيًا.</div>
+      <button class="btn block" onclick="newClient()">+ إضافة عميل جديد</button>`;
+  }
+  const card = (u) => `
+    <div class="card tap" onclick="openClient('${u.client.id}')">
+      <div class="row">
+        <div class="avatar">${esc(initials(u.client.name))}</div>
+        <div class="grow">
+          <div class="name">${esc(u.client.name)}</div>
+          <div class="meta">
+            <span>📅 ${fmtDate(u.date)}</span>
+            <span class="chip ${u.overdue ? 'red' : (u.date === todayISO() ? 'amber' : 'green')}">${relDay(u.date)}</span>
+          </div>
+          ${u.purpose ? `<div class="meta">🎯 ${esc(u.purpose)}</div>` : ''}
+          ${u.client.address ? `<div class="meta">📍 ${esc(u.client.address)}</div>` : ''}
+        </div>
+        <a class="btn sm line" style="text-decoration:none" href="${dirUrl(u.client)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">🗺️</a>
+      </div>
+    </div>`;
+  let h = `<div class="kpis">
+      <div class="kpi"><b>${state.clients.length}</b><span>إجمالي العملاء</span></div>
+      <div class="kpi"><b>${list.length}</b><span>مواعيد قادمة</span></div>
+      <div class="kpi"><b style="color:${overdue.length ? '#dc2626' : '#0f766e'}">${overdue.length}</b><span>زيارات متأخرة</span></div>
+    </div>`;
+  if (overdue.length) h += `<div class="banner warn">⚠️ <div>عندك ${overdue.length} زيارة اتأخرت عن ميعادها — ابدأ بيها.</div></div>
+    <div class="section-title">متأخرة</div>${overdue.map(card).join('')}`;
+  if (today.length) h += `<div class="section-title">مستحقة اليوم</div>${today.map(card).join('')}`;
+  if (later.length) h += `<div class="section-title">قادمة</div>${later.map(card).join('')}`;
+  return h;
+}
+
+/* ---------- 9) شاشة العملاء ---------- */
+function viewClients() {
+  const q = state.search.trim().toLowerCase();
+  let list = state.clients.slice();
+  if (q) list = list.filter(c => (c.name + ' ' + (c.phone || '') + ' ' + (c.business || '') + ' ' + (c.address || '') + ' ' + (c.notes || '')).toLowerCase().includes(q));
+  const bar = `<div class="searchbar">
+      <span class="ic">🔍</span>
+      <input type="search" id="q" placeholder="ابحث بالاسم أو الهاتف أو العنوان…" value="${esc(state.search)}" oninput="onSearch(this.value)">
+    </div>`;
+  if (!state.clients.length) {
+    return bar + `<div class="empty"><span class="big">👥</span>لا يوجد عملاء بعد.<br>اضغط ➕ لإضافة أول عميل.</div>
+      <button class="btn block" onclick="newClient()">+ إضافة عميل جديد</button>`;
+  }
+  if (!list.length) return bar + `<div class="empty"><span class="big">🔍</span>لا نتائج للبحث «${esc(state.search)}»</div>`;
+  return bar + list.map(c => {
+    const nv = nextVisitOf(c.id), lv = lastVisitOf(c.id);
+    const od = nv && nv.nextDate && nv.nextDate < todayISO();
+    return `<div class="card tap" onclick="openClient('${c.id}')">
+      <div class="row">
+        <div class="avatar">${esc(initials(c.name))}</div>
+        <div class="grow">
+          <div class="name">${esc(c.name)}</div>
+          <div class="meta">
+            ${c.business ? `<span>💼 ${esc(c.business)}</span>` : ''}
+            ${c.phone ? `<span>📞 ${esc(c.phone)}</span>` : ''}
+          </div>
+          <div class="meta">
+            <span>📋 ${visitsOf(c.id).length} زيارة</span>
+            ${lv ? `<span>آخر زيارة: ${fmtDate(lv.date)}</span>` : ''}
+            ${clientAttCount(c.id) ? `<span>📎 ${clientAttCount(c.id)} مرفق</span>` : ''}
+          </div>
+          ${nv && nv.nextDate ? `<div class="meta"><span class="chip ${od ? 'red' : 'blue'}">⏰ القادمة ${fmtDate(nv.nextDate)} • ${relDay(nv.nextDate)}</span></div>` : ''}
+        </div>
+        <span style="color:#94a3b8;font-size:20px">›</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+function onSearch(v) {
+  state.search = v;
+  const list = state.clients.slice();
+  const q = v.trim().toLowerCase();
+  const filtered = q ? list.filter(c => (c.name + ' ' + (c.phone || '') + ' ' + (c.business || '') + ' ' + (c.address || '') + ' ' + (c.notes || '')).toLowerCase().includes(q)) : list;
+  // إعادة الرسم بدون فقد المؤشر
+  const main = document.getElementById('main');
+  main.innerHTML = viewClients();
+  const i = document.getElementById('q');
+  if (i) { i.focus(); i.setSelectionRange(v.length, v.length); }
+  state.search = v;
+}
+function focusSearch() {
+  if (state.view.name !== 'root' || state.tab !== 'clients') { setTab('clients'); }
+  setTimeout(() => { const i = document.getElementById('q'); if (i) i.focus(); }, 60);
+}
+
+/* ---------- 10) شاشة سجل الزيارات ---------- */
+function viewVisits() {
+  const all = state.visits.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  if (!all.length) return `<div class="empty"><span class="big">📋</span>لا توجد زيارات مسجلة.<br>افتح أي عميل واضغط «تسجيل زيارة».</div>`;
+  let h = '<div class="section-title">كل الزيارات (' + all.length + ')</div>';
+  h += all.map(v => {
+    const c = clientById(v.clientId);
+    return `<div class="card tap" onclick="openClient('${v.clientId}')">
+      <div class="row between"><div class="name">${esc(c ? c.name : 'عميل محذوف')}</div><span class="tag">${fmtDate(v.date)}</span></div>
+      <div class="meta" style="margin-top:5px"><span>🎯 ${esc(v.purpose || 'بدون غرض محدد')}</span>${attCountOf('visit', v.id) ? `<span>📎 ${attCountOf('visit', v.id)} مرفق</span>` : ''}</div>
+      ${v.nextDate ? `<div class="meta"><span class="chip blue">الزيارة القادمة: ${fmtDate(v.nextDate)} • ${relDay(v.nextDate)}</span></div>` : ''}
+      ${v.notes ? `<div class="meta" style="display:block">📝 ${esc(v.notes).slice(0, 120)}</div>` : ''}
+    </div>`;
+  }).join('');
+  return h;
+}
+
+/* ---------- 11) شاشة العميل ---------- */
+function viewClient(id) {
+  const c = clientById(id);
+  if (!c) return `<div class="empty">العميل غير موجود</div>`;
+  const vs = visitsOf(id);
+  const nv = nextVisitOf(id);
+  const od = nv && nv.nextDate && nv.nextDate < todayISO();
+  const m = mapsUrl(c), d = dirUrl(c);
+  let h = `<div class="card">
+      <div class="row">
+        <div class="avatar" style="width:54px;height:54px;font-size:19px">${esc(initials(c.name))}</div>
+        <div class="grow">
+          <div class="name" style="font-size:17px">${esc(c.name)}</div>
+          ${c.business ? `<div class="meta">💼 ${esc(c.business)}</div>` : ''}
+          <div class="meta">
+            <span>📋 ${vs.length} زيارة</span>
+            ${vs.length ? `<span>آخر زيارة: ${fmtDate(vs[0].date)}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      ${nv && nv.nextDate ? `<hr class="sep"><div class="row between">
+          <span class="chip ${od ? 'red' : 'green'}">⏰ الزيارة القادمة: ${fmtDate(nv.nextDate)} (${relDay(nv.nextDate)})</span>
+        </div>${nv.nextPurpose ? `<div class="meta" style="margin-top:6px">🎯 ${esc(nv.nextPurpose)}</div>` : ''}` : ''}
+    </div>`;
+
+  h += `<div class="banner map">
+      <div class="row between"><b>📍 العنوان على جوجل ماب</b>
+        ${m ? `<a class="btn sm blue" style="text-decoration:none" href="${m}" target="_blank" rel="noopener">فتح الموقع</a>` : ''}
+      </div>
+      <div style="margin-top:6px;font-size:13px">${esc(c.address || (c.lat ? (c.lat + ', ' + c.lng) : 'لم يُسجَّل عنوان بعد'))}</div>
+      ${m ? `<div class="btn-row">
+          <a class="btn sm line" style="text-decoration:none" href="${d}" target="_blank" rel="noopener">🧭 اتجاهات الوصول</a>
+          <button class="btn sm ghost" onclick="copyText('${esc(m)}')">📄 نسخ الرابط</button>
+          <a class="btn sm ghost" style="text-decoration:none" href="${m}" target="_blank" rel="noopener">↗ مشاركة الموقع</a>
+        </div>` : `<div class="btn-row"><button class="btn sm line" onclick="editClient('${id}')">➕ إضافة عنوان/رابط الخريطة</button></div>`}
+    </div>`;
+
+  h += `<div class="btn-grid">
+      <button class="btn blue" onclick="newVisit('${id}')">➕ تسجيل زيارة</button>
+      <a class="btn line" style="text-decoration:none" href="${telUrl(c.phone)}">📞 اتصال</a>
+      <button class="btn ghost" onclick="editClient('${id}')">✏️ تعديل البيانات</button>
+      <button class="btn red" onclick="removeClient('${id}')">🗑️ حذف العميل</button>
+    </div>`;
+  if (c.phone) h += `<div class="btn-grid" style="margin-top:8px">
+      <a class="btn ghost" style="text-decoration:none" href="${waUrl(c.phone)}" target="_blank" rel="noopener">💬 واتساب</a>
+      <a class="btn ghost" style="text-decoration:none" href="sms:${esc(c.phone)}">✉️ رسالة</a>
+    </div>`;
+
+  if (c.notes) h += `<div class="section-title">ملاحظات عامة</div><div class="card"><div style="font-size:14px;white-space:pre-wrap">${esc(c.notes)}</div></div>`;
+
+  h += `<div class="section-title">مرفقات العميل (صور وفواتير) ${clientAttCount(id) ? `<span class="tag">${clientAttCount(id)}</span>` : ''}</div>
+    <div class="card">
+      <div id="clientAtts"><div class="hint">جاري التحميل…</div></div>
+      <div class="btn-row">
+        <button class="btn sm" onclick="pickFor('client','${id}','cam')">📷 تصوير</button>
+        <button class="btn sm line" onclick="pickFor('client','${id}','img')">🖼️ صورة من الجهاز</button>
+        <button class="btn sm line" onclick="pickFor('client','${id}','file')">📄 فاتورة / ملف</button>
+        <button class="btn sm ghost" onclick="openClientAtts('${id}')">📎 كل المرفقات</button>
+      </div>
+    </div>`;
+
+  h += `<div class="section-title">سجل الزيارات (${vs.length})</div>`;
+  if (!vs.length) h += `<div class="card"><div class="hint">لا توجد زيارات مسجلة لهذا العميل.</div></div>`;
+  else {
+    h += '<div class="tl">' + vs.map(v => `
+      <div class="dot card">
+        <div class="row between"><span class="tag">${fmtDate(v.date)}</span><span class="hint">${relDay(v.date)}</span></div>
+        <div style="font-weight:700;margin-top:5px">🎯 ${esc(v.purpose || 'زيارة')}</div>
+        ${v.outcome ? `<div class="meta" style="display:block">✅ ${esc(v.outcome)}</div>` : ''}
+        ${v.notes ? `<div class="meta" style="display:block;white-space:pre-wrap">📝 ${esc(v.notes)}</div>` : ''}
+        ${v.nextDate ? `<div class="meta" style="display:block"><span class="chip blue">القادمة: ${fmtDate(v.nextDate)} • ${relDay(v.nextDate)}</span></div>` : ''}
+        <div id="attv_${v.id}"></div>
+        <div class="btn-row">
+          <button class="btn sm ghost" onclick="attachForVisit('${v.id}')">📎 مرفقات الزيارة${attCountOf('visit', v.id) ? ' (' + attCountOf('visit', v.id) + ')' : ''}</button>
+          <button class="btn sm ghost" onclick="editVisit('${v.id}')">✏️ تعديل</button>
+          <button class="btn sm red" onclick="removeVisit('${v.id}')">🗑️</button>
+        </div>
+      </div>`).join('') + '</div>';
+  }
+  return h;
+}
+async function loadClientAttachments(id) {
+  const box = document.getElementById('clientAtts');
+  if (!box) return;
+  const list = await attachmentsOf('client', id);
+  box.innerHTML = list.length ? attsHtml(list) : '<div class="hint">لا توجد مرفقات بعد — صوّر فاتورة أو أضف صورة/ملف.</div>';
+  const vs = visitsOf(id);
+  for (const v of vs) {
+    const e = document.getElementById('attv_' + v.id);
+    if (e) {
+      const la = await attachmentsOf('visit', v.id);
+      if (la.length) e.innerHTML = '<div style="margin-top:7px">' + attsHtml(la) + '</div>';
+    }
+  }
+}
+function fileIco(t) {
+  t = String(t || '');
+  if (/pdf/.test(t)) return '📕';
+  if (/word|doc/.test(t)) return '📘';
+  if (/sheet|excel|csv/.test(t)) return '📗';
+  if (/zip|rar|compressed/.test(t)) return '🗜️';
+  if (/^image\//.test(t)) return '🖼️';
+  return '📄';
+}
+function attsHtml(list) {
+  const imgs = list.filter(a => a.isImg);
+  const files = list.filter(a => !a.isImg);
+  let h = '';
+  if (imgs.length) h += '<div class="att-grid">' + imgs.map(a =>
+    `<div class="att-tile">
+      <img src="${a.data}" alt="${esc(a.name)}" onclick="openViewer('${a.id}')">
+      <span class="badge2">${fmtSize(a.size)}</span>
+      <button class="del" title="حذف" onclick="delAtt('${a.id}','${a.ownerType}','${a.ownerId}')">✕</button>
+    </div>`).join('') + '</div>';
+  if (files.length) h += files.map(a =>
+    `<div class="att-row">
+      <span class="att-ico">${fileIco(a.type)}</span>
+      <div class="grow">
+        <div class="nm">${esc(a.name)}</div>
+        <div class="sz">${fmtSize(a.size)} • ${fmtDate(new Date(a.createdAt || Date.now()).toISOString())}</div>
+      </div>
+      <button class="btn sm ghost" title="عرض" onclick="openViewer('${a.id}')">👁️</button>
+      <a class="btn sm line" style="text-decoration:none" title="تنزيل" href="${a.data}" download="${esc(a.name)}">⇩</a>
+      <button class="btn sm red" title="حذف" onclick="delAtt('${a.id}','${a.ownerType}','${a.ownerId}')">🗑️</button>
+    </div>`).join('');
+  return h;
+}
+async function delAtt(aid, ownerType, ownerId) {
+  if (!(await askConfirm('حذف هذا المرفق نهائيًا؟ لا يمكن التراجع.', 'حذف المرفق'))) return;
+  await indexRemove([aid]);
+  state.attDirty = true;
+  toast('تم حذف المرفق');
+  if (document.getElementById('viewerBox')) { openViewerClose(true); return; }
+  if (ownerType === 'client' && state.view.name === 'client') loadClientAttachments(ownerId);
+  else render();
+}
+async function openViewer(aid) {
+  const a = await Store.get('att:' + aid, null);
+  if (!a) return toast('المرفق غير موجود');
+  const box = document.createElement('div');
+  box.id = 'viewerBox'; box.className = 'viewer';
+  box.innerHTML = `<div class="vh">
+      <h3>${esc(a.name)}</h3>
+      <span class="hint" style="color:#cbd5e1">${fmtSize(a.size)}</span>
+      <button class="x" onclick="openViewerClose()">✕</button></div>
+    <div class="vi">${a.isImg
+      ? `<img src="${a.data}" alt="${esc(a.name)}">`
+      : `<div style="color:#e2e8f0;text-align:center"><div style="font-size:54px">${fileIco(a.type)}</div>
+         <div style="margin-top:8px;font-size:13.5px">لا يمكن معاينة هذا النوع داخل التطبيق — نزّله لعرضه.</div></div>`}</div>
+    <div class="vf">
+      <a class="btn" style="text-decoration:none" href="${a.data}" download="${esc(a.name)}">⇩ تنزيل</a>
+      <button class="btn red" onclick="delAtt('${a.id}','${a.ownerType}','${a.ownerId}')">🗑️ حذف</button>
+      <button class="btn ghost" onclick="openViewerClose()">إغلاق</button>
+    </div>`;
+  box.onclick = (e) => { if (e.target === box) openViewerClose(); };
+  document.body.appendChild(box);
+}
+function openViewerClose(refresh) {
+  const v = document.getElementById('viewerBox');
+  if (v) v.remove();
+  if (refresh) render();
+}
+function viewImage(aid) { return openViewer(aid); }
+
+/* ---------- 12) اختيار المرفقات ---------- */
+function pickFor(ownerType, ownerId, kind) {
+  if (kind === '__menu') {
+    openSheet('إضافة مرفق للعميل', `<div class="hint">سيُحفظ المرفق في ملف العميل مباشرة.</div>
+      <div class="btn-row">
+        <button class="btn" onclick="closeSheet();pickFor('client','${ownerId}','cam')">📷 تصوير</button>
+        <button class="btn line" onclick="closeSheet();pickFor('client','${ownerId}','img')">🖼️ صورة</button>
+        <button class="btn line" onclick="closeSheet();pickFor('client','${ownerId}','file')">📄 ملف / فاتورة</button>
+      </div>`);
+    return;
+  }
+  if (kind === 'cam') {
+    const el = document.getElementById('hiddenCam');
+    el.onchange = async () => { await handlePicked(el.files, 'client', ownerId); el.value = ''; };
+    el.click();
+  } else if (kind === 'img') {
+    const el = document.getElementById('hiddenFile');
+    el.accept = 'image/*'; el.removeAttribute('capture');
+    el.onchange = async () => { await handlePicked(el.files, 'client', ownerId); el.value = ''; };
+    el.click();
+  } else {
+    const el = document.getElementById('hiddenFile');
+    el.accept = '*/*'; el.removeAttribute('capture');
+    el.onchange = async () => { await handlePicked(el.files, 'client', ownerId); el.value = ''; };
+    el.click();
+  }
+}
+async function attachForVisit(visitId) {
+  const el = document.getElementById('hiddenFile');
+  el.accept = '*/*'; el.removeAttribute('capture');
+  el.onchange = async () => { await handlePicked(el.files, 'visit', visitId); el.value = ''; };
+  el.click();
+}
+async function handlePicked(files, ownerType, ownerId) {
+  if (!files || !files.length) return;
+  toast('جاري معالجة المرفقات…', 1200);
+  const atts = [];
+  for (const f of Array.from(files)) {
+    const a = await fileToAttachment(f);
+    if (a) atts.push(a);
+  }
+  if (!atts.length) return toast('لم يتم إضافة أي مرفق');
+  const big = atts.filter(a => a.size > 5 * 1048576);
+  await saveAttachments(ownerType, ownerId, atts);
+  await indexAdd(atts);
+  toast(`تم إضافة ${atts.length} مرفق` + (big.length ? ' (حجم كبير قد يبطئ النسخ الاحتياطي)' : ''));
+  if (ownerType === 'client' && state.view.name === 'client') loadClientAttachments(ownerId);
+  else render();
+}
+async function handlePending(files) {
+  if (!files || !files.length) return;
+  for (const f of Array.from(files)) {
+    const a = await fileToAttachment(f);
+    if (a) state.pendingFiles.push(a);
+  }
+  renderPending();
+  toast('تم إضافة مرفق — سيُحفظ مع الزيارة');
+}
+function renderPending() {
+  const box = document.getElementById('pendingBox');
+  if (!box) return;
+  box.innerHTML = state.pendingFiles.length
+    ? '<div class="pending">' + state.pendingFiles.map((a, i) =>
+      `<span class="p">${a.isImg ? '🖼️' : '📄'} ${esc(a.name).slice(0, 22)}<button onclick="dropPending(${i})">✕</button></span>`).join('') + '</div>'
+    : '<div class="hint">لا مرفقات مضافة للزيارة</div>';
+}
+function dropPending(i) { state.pendingFiles.splice(i, 1); renderPending(); }
+function pendPick(kind) {
+  const el = document.getElementById(kind === 'cam' ? 'hiddenCam' : 'hiddenFile');
+  if (kind === 'cam') el.accept = 'image/*';
+  else if (kind === 'img') el.accept = 'image/*';
+  else el.accept = '*/*';
+  el.onchange = async () => { await handlePending(el.files); el.value = ''; };
+  el.click();
+}
+
+/* ---------- 13) نموذج العميل ---------- */
+function viewClientForm(id) {
+  const c = id ? clientById(id) : null;
+  const g = (k, d) => c ? (c[k] == null ? d : c[k]) : d;
+  return `
+  <div class="card">
+    <label class="fld"><span>اسم العميل *</span><input type="text" id="f_name" value="${esc(g('name', ''))}" placeholder="مثال: شركة النور للتجارة / أ. محمد علي"></label>
+    <label class="fld"><span>رقم الهاتف</span><input type="tel" id="f_phone" value="${esc(g('phone', ''))}" placeholder="01xxxxxxxxx"></label>
+    <label class="fld"><span>النشاط / نوع التعامل</span><input type="text" id="f_business" value="${esc(g('business', ''))}" placeholder="مثال: قطع غيار سيارات"></label>
+    <label class="fld"><span>العنوان النصي</span><textarea id="f_address" placeholder="المدينة، الشارع، علامة مميزة">${esc(g('address', ''))}</textarea></label>
+    <label class="fld"><span>رابط الموقع على جوجل ماب (الرابط الأهم)</span>
+      <input type="text" id="f_mapLink" value="${esc(g('mapLink', ''))}" placeholder="https://maps.app.goo.gl/xxxx  أو  https://www.google.com/maps/@30.04,31.23,17z">
+      <div class="hint">افتح جوجل ماب → اضغط مطوّلًا على مكان العميل → «مشاركة» → انسخ الرابط والصقه هنا. أو اضغط الزر بالأسفل لتسجيل إحداثيات موقعك الحالي.</div>
+    </label>
+    <div class="btn-row" style="margin-top:-4px">
+      <button class="btn sm line" onclick="geoFill()">📍 تسجيل موقعي الحالي</button>
+      <button class="btn sm ghost" onclick="buildMapLink()">🔗 بناء رابط من العنوان</button>
+    </div>
+    <div id="geoInfo" class="hint"></div>
+    <input type="hidden" id="f_lat" value="${esc(g('lat', ''))}"><input type="hidden" id="f_lng" value="${esc(g('lng', ''))}">
+    <hr class="sep">
+    <label class="fld"><span>ملاحظات عامة</span><textarea id="f_notes" placeholder="أي تفاصيل مهمة عن العميل">${esc(g('notes', ''))}</textarea></label>
+  </div>
+  <button class="btn block" onclick="submitClient(${id ? `'${id}'` : 'null'})">💾 حفظ العميل</button>
+  <button class="btn block ghost" style="margin-top:8px" onclick="goBack()">إلغاء</button>`;
+}
+function geoFill() {
+  if (!navigator.geolocation) return toast('الجهاز لا يدعم تحديد الموقع');
+  toast('جاري تحديد موقعك…', 1500);
+  navigator.geolocation.getCurrentPosition(p => {
+    document.getElementById('f_lat').value = p.coords.latitude.toFixed(6);
+    document.getElementById('f_lng').value = p.coords.longitude.toFixed(6);
+    document.getElementById('geoInfo').innerHTML = `✅ تم تسجيل الإحداثيات: ${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)} — سيتم بناء رابط الخريطة تلقائيًا`;
+  }, e => toast('تعذر تحديد الموقع — تأكد من تشغيل الـ GPS والسماح للتطبيق'), { enableHighAccuracy: true, timeout: 10000 });
+}
+function buildMapLink() {
+  const a = (document.getElementById('f_address').value || '').trim();
+  if (!a) return toast('اكتب العنوان أولًا');
+  document.getElementById('f_mapLink').value = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(a);
+  toast('تم بناء رابط الخريطة من العنوان');
+}
+async function submitClient(id) {
+  const name = (document.getElementById('f_name').value || '').trim();
+  if (!name) return toast('اكتب اسم العميل');
+  const data = {
+    name,
+    phone: (document.getElementById('f_phone').value || '').trim(),
+    business: (document.getElementById('f_business').value || '').trim(),
+    address: (document.getElementById('f_address').value || '').trim(),
+    mapLink: (document.getElementById('f_mapLink').value || '').trim(),
+    lat: (document.getElementById('f_lat').value || '').trim(),
+    lng: (document.getElementById('f_lng').value || '').trim(),
+    notes: (document.getElementById('f_notes').value || '').trim()
+  };
+  const newId = await saveClient(data, id);
+  toast(id ? 'تم تحديث بيانات العميل' : 'تم إضافة العميل');
+  if (id) { state.view = { name: 'client', id: newId }; render(); }
+  else { state.stack = []; state.view = { name: 'client', id: newId }; setTabSilent('clients'); render(); }
+}
+function setTabSilent(t) {
+  state.tab = t;
+  document.querySelectorAll('nav.bottom button').forEach(b => b.classList.toggle('active', b.dataset.tab === t));
+}
+function newClient() { state.view = { name: 'newClient' }; state.stack = []; render(); }
+function editClient(id) { state.view = { name: 'editClient', id }; render(); }
+async function removeClient(id) {
+  const c = clientById(id);
+  if (!(await askConfirm('حذف العميل «' + c.name + '» مع كل زياراته ومرفقاته؟ لا يمكن التراجع.', 'حذف العميل'))) return;
+  await deleteClient(id);
+  toast('تم حذف العميل');
+  state.stack = []; state.view = { name: 'root' }; render();
+}
+
+/* ---------- 14) نموذج الزيارة ---------- */
+function viewVisitForm(clientId, visitId) {
+  const c = clientById(clientId);
+  const v = visitId ? state.visits.find(x => x.id === visitId) : null;
+  const purposes = ['زيارة تعريفية', 'تحصيل', 'عرض سعر', 'تسليم طلبية', 'متابعة', 'شكوى', 'صيانة', 'أخرى'];
+  return `
+  <div class="card">
+    <div class="row"><div class="avatar">${esc(initials(c ? c.name : ''))}</div><div class="grow"><div class="name">${esc(c ? c.name : '')}</div><div class="meta">${esc(c && c.business ? c.business : '')}</div></div></div>
+  </div>
+  <div class="card">
+    <label class="fld"><span>تاريخ الزيارة *</span><input type="date" id="v_date" value="${esc(v ? String(v.date).slice(0, 10) : todayISO())}"></label>
+    <label class="fld"><span>الغرض من الزيارة *</span>
+      <select id="v_purpose" onchange="if(this.value==='__o'){this.style.display='none';document.getElementById('v_purpose_o').style.display='block';document.getElementById('v_purpose_o').focus()}">
+        ${purposes.map(p => `<option value="${p}" ${v && v.purpose === p ? 'selected' : ''}>${p}</option>`).join('')}
+        <option value="__o" ${v && v.purpose && purposes.indexOf(v.purpose) < 0 ? 'selected' : ''}>أخرى (اكتب)</option>
+      </select>
+      <input type="text" id="v_purpose_o" style="display:${v && v.purpose && purposes.indexOf(v.purpose) < 0 ? 'block' : 'none'};margin-top:7px" value="${esc(v && v.purpose && purposes.indexOf(v.purpose) < 0 ? v.purpose : '')}" placeholder="اكتب غرض الزيارة">
+    </label>
+    <label class="fld"><span>نتيجة الزيارة</span><textarea id="v_outcome" placeholder="مثال: تم الاتفاق على توريد 50 وحدة الأسبوع القادم">${esc(v ? (v.outcome || '') : '')}</textarea></label>
+    <label class="fld"><span>ملاحظات التفاصيل</span><textarea id="v_notes" placeholder="تفاصيل ما تم مناقشته">${esc(v ? (v.notes || '') : '')}</textarea></label>
+    <hr class="sep">
+    <label class="fld"><span>ميعاد الزيارة القادمة</span><input type="date" id="v_next" value="${esc(v && v.nextDate ? String(v.nextDate).slice(0, 10) : '')}"></label>
+    <div class="btn-row" style="margin-top:-6px">
+      <button class="btn sm ghost" onclick="setNext(7)">بعد أسبوع</button>
+      <button class="btn sm ghost" onclick="setNext(14)">بعد أسبوعين</button>
+      <button class="btn sm ghost" onclick="setNext(30)">بعد شهر</button>
+    </div>
+    <label class="fld" style="margin-top:11px"><span>غرض الزيارة القادمة</span><input type="text" id="v_nextpurpose" value="${esc(v ? (v.nextPurpose || '') : '')}" placeholder="مثال: تحصيل مستحقات"></label>
+  </div>
+  <div class="card">
+    <div class="row between"><b>📎 مرفقات الزيارة</b><span class="hint">صور / فواتير</span></div>
+    ${v ? `<div id="visitAtts"><div class="hint">جاري التحميل…</div></div>` : ''}
+    <div id="pendingBox"></div>
+    <div class="btn-row">
+      <button class="btn sm" onclick="pendPick('cam')">📷 تصوير</button>
+      <button class="btn sm line" onclick="pendPick('img')">🖼️ صورة</button>
+      <button class="btn sm line" onclick="pendPick('file')">📄 ملف/فاتورة</button>
+    </div>
+  </div>
+  <button class="btn block" onclick="submitVisit('${clientId}')">💾 حفظ الزيارة</button>
+  <button class="btn block ghost" style="margin-top:8px" onclick="goBack()">إلغاء</button>`;
+}
+function setNext(days) {
+  const d = new Date(); d.setDate(d.getDate() + days);
+  document.getElementById('v_next').value = d.toISOString().slice(0, 10);
+}
+function loadVisitAtts(visitId) {
+  const box = document.getElementById('visitAtts');
+  if (!box) return;
+  attachmentsOf('visit', visitId).then(list => {
+    box.innerHTML = list.length ? attsHtml(list) : '<div class="hint">لا مرفقات محفوظة لهذه الزيارة</div>';
+  });
+}
+function newVisit(clientId) { state.editVisitId = null; state.pendingFiles = []; state.view = { name: 'visit', clientId }; render(); }
+function editVisit(id) { state.editVisitId = id; state.pendingFiles = []; state.view = { name: 'visit', clientId: state.visits.find(v => v.id === id).clientId }; render(); }
+async function submitVisit(clientId) {
+  const po = document.getElementById('v_purpose_o');
+  const ps = document.getElementById('v_purpose');
+  let purpose = (po.style.display !== 'none' && po.value.trim()) ? po.value.trim() : ps.value;
+  if (purpose === '__o') purpose = po.value.trim();
+  const date = document.getElementById('v_date').value || todayISO();
+  if (!purpose) return toast('حدد غرض الزيارة');
+  const data = {
+    clientId, date, purpose,
+    outcome: document.getElementById('v_outcome').value.trim(),
+    notes: document.getElementById('v_notes').value.trim(),
+    nextDate: document.getElementById('v_next').value || '',
+    nextPurpose: document.getElementById('v_nextpurpose').value.trim()
+  };
+  const editing = state.editVisitId;
+  await saveVisit(data, editing);
+  const vid = editing || state.visits[state.visits.length - 1].id;
+  if (state.pendingFiles.length) {
+    await saveAttachments('visit', vid, state.pendingFiles);
+    await indexAdd(state.pendingFiles);
+    state.pendingFiles = [];
+  }
+  toast(editing ? 'تم تحديث الزيارة' : 'تم تسجيل الزيارة');
+  state.stack = [];
+  setTabSilent('clients');
+  state.view = { name: 'client', id: clientId };
+  render();
+}
+async function removeVisit(id) {
+  if (!(await askConfirm('حذف هذه الزيارة ومرفقاتها؟', 'حذف الزيارة'))) return;
+  const v = state.visits.find(x => x.id === id);
+  const cid = v ? v.clientId : null;
+  await deleteVisit(id);
+  toast('تم حذف الزيارة');
+  if (cid) { state.view = { name: 'client', id: cid }; render(); } else render();
+}
+
+/* ---------- 15) شاشة البيانات والنسخ الاحتياطي ---------- */
+function viewData() {
+  const mode = Store.getMode();
+  const modeTxt = mode === 'idb' ? 'IndexedDB (الوضع الأفضل)' : (mode === 'ls' ? 'localStorage (محدود ~5 م.ب)' : 'ذاكرة مؤقتة (البيانات ستضيع عند إغلاق الصفحة!)');
+  const hasPass = Auth.hasPass();
+  return `
+  ${mode === 'mem' ? `<div class="banner warn">⚠️ <div>المتصفح منع التخزين المحلي لهذا الملف. صدّر نسخة احتياطية ولا تعتمد عليه كأرشيف دائم.</div></div>` : ''}
+  <div class="card">
+    <div class="section-title" style="margin-top:0">حالة التخزين</div>
+    <div class="meta" style="display:block">🗄️ الوضع: <b>${modeTxt}</b></div>
+    <div class="meta" style="display:block">👥 العملاء: <b>${state.clients.length}</b> • 📋 الزيارات: <b>${state.visits.length}</b> • 📎 المرفقات: <b>${state.attTotal || 0}</b> • ⏰ مواعيد قادمة: <b>${upcomingList().length}</b></div>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-top:0">النسخ الاحتياطي والاسترجاع</div>
+    <button class="btn block" onclick="exportJSON()">⬇️ تصدير نسخة كاملة (JSON)</button>
+    <button class="btn block ghost" style="margin-top:8px" onclick="exportCSV()">📊 تصدير العملاء (CSV لإكسل)</button>
+    <button class="btn block ghost" style="margin-top:8px" onclick="pickImport()">⬆️ استرجاع نسخة احتياطية</button>
+    <div class="hint" style="margin-top:8px">النسخة الكاملة تشمل العملاء والزيارات وكل المرفقات (بالصور والفواتير). احفظها في مكان آمن من فترة لأخرى.</div>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-top:0">عن التطبيق</div>
+    <div style="font-size:13.5px">تطبيق «يوميات العملاء» يعمل بالكامل على هاتفك بدون إنترنت، وكل البيانات محفوظة على الجهاز نفسه ولا تُرسل لأي سيرفر.
+    <hr class="sep">
+    <b>تثبيت على الشاشة الرئيسية:</b> افتح القائمة في المتصفح (⋮) ثم «إضافة إلى الشاشة الرئيسية» ليصبح التطبيق مثل أي تطبيق عادي.<br>
+    <b>رابط جوجل ماب:</b> لصق رابط الموقع يعطي دقة أعلى من كتابة العنوان.</div>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-top:0">🔐 حماية التطبيق بكلمة مرور</div>
+    <div style="font-size:13.5px;line-height:1.9">
+      ${hasPass
+        ? 'الحالة: <b style="color:#166534">مُفعّلة</b> — كلمة المرور مخزّنة مشفّرة (SHA-256 مع ملح عشوائي) على الجهاز فقط ولا يمكن قراءتها.'
+        : 'الحالة: <b style="color:#991b1b">غير مُفعّلة</b> — يُنصح بتفعيل كلمة مرور لحماية بيانات عملائك.'}
+    </div>
+    <label class="fld" style="margin-top:11px"><span>القفل التلقائي عند مغادرة التطبيق</span>
+      <select id="d_autolock" onchange="Auth.setAutoLock(this.value)">
+        <option value="0" ${Auth.getAutoLock() === 0 ? 'selected' : ''}>بدون</option>
+        <option value="1" ${Auth.getAutoLock() === 1 ? 'selected' : ''}>بعد دقيقة واحدة</option>
+        <option value="5" ${Auth.getAutoLock() === 5 ? 'selected' : ''}>بعد 5 دقائق</option>
+        <option value="15" ${Auth.getAutoLock() === 15 ? 'selected' : ''}>بعد 15 دقيقة</option>
+      </select></label>
+    <div class="btn-row">
+      ${hasPass
+        ? `<button class="btn sm" onclick="Auth.lock('قفل يدوي')">🔒 قفل الآن</button>
+           <button class="btn sm line" onclick="Auth.changeFlow()">🔑 تغيير كلمة المرور</button>
+           <button class="btn sm ghost" onclick="Auth.removeFlow()">🗝️ إزالة كلمة المرور</button>`
+        : `<button class="btn sm" onclick="Auth.setupFlow()">🔐 تعيين كلمة مرور</button>`}
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title" style="margin-top:0;color:#991b1b">منطقة الخطر</div>
+    <button class="btn block red" onclick="wipeAll()">🗑️ حذف كل البيانات</button>
+  </div>`;
+}
+function download(name, text, type) {
+  const blob = new Blob([text], { type: type || 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
+}
+async function exportJSON() {
+  toast('جاري تجهيز النسخة…', 2000);
+  const idx = await Store.get('attachIndex', []);
+  const atts = [];
+  for (const it of idx) { const a = await Store.get('att:' + it.id, null); if (a) atts.push(a); }
+  const pack = { app: 'clients-diary', version: 1, exportedAt: new Date().toISOString(), clients: state.clients, visits: state.visits, attachments: atts };
+  download('نسخة-احتياطية-يوميات-العملاء-' + todayISO() + '.json', JSON.stringify(pack));
+  toast('تم تجهيز النسخة الاحتياطية');
+}
+function exportCSV() {
+  const rows = [['الاسم', 'الهاتف', 'النشاط', 'العنوان', 'رابط جوجل ماب', 'عدد الزيارات', 'آخر زيارة', 'الزيارة القادمة', 'غرض الزيارة القادمة', 'ملاحظات']];
+  state.clients.forEach(c => {
+    const nv = nextVisitOf(c.id), lv = lastVisitOf(c.id);
+    rows.push([c.name, c.phone || '', c.business || '', c.address || '', mapsUrl(c), visitsOf(c.id).length,
+      lv ? lv.date : '', nv && nv.nextDate ? nv.nextDate : '', nv ? (nv.nextPurpose || '') : '', (c.notes || '').replace(/[\r\n]+/g, ' ')]);
+  });
+  const csv = '\ufeff' + rows.map(r => r.map(v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"').join(',')).join('\r\n');
+  download('العملاء-' + todayISO() + '.csv', csv, 'text/csv;charset=utf-8');
+  toast('تم تصدير ملف العملاء');
+}
+function pickImport() {
+  const el = document.getElementById('hiddenFile');
+  el.accept = 'application/json,.json'; el.removeAttribute('capture');
+  el.onchange = () => { const f = el.files[0]; if (f) importJSON(f); el.value = ''; };
+  el.click();
+}
+function importJSON(file) {
+  const r = new FileReader();
+  r.onload = async () => {
+    try {
+      const p = JSON.parse(r.result);
+      if (!p.clients || !Array.isArray(p.clients)) return toast('ملف غير صالح');
+      if (!(await askConfirm('سيتم دمج ' + p.clients.length + ' عميل و' + (p.visits || []).length + ' زيارة مع بياناتك الحالية. متابعة؟', 'متابعة الاسترجاع', false))) return;
+      const cIds = new Set(state.clients.map(c => c.id));
+      (p.clients || []).forEach(c => { if (!cIds.has(c.id)) state.clients.push(c); });
+      const vIds = new Set(state.visits.map(v => v.id));
+      (p.visits || []).forEach(v => { if (!vIds.has(v.id)) state.visits.push(v); });
+      const idx = await Store.get('attachIndex', []);
+      const have = new Set(idx.map(x => x.id));
+      for (const a of (p.attachments || [])) {
+        if (!have.has(a.id)) { await Store.set('att:' + a.id, a); idx.push({ id: a.id, ownerType: a.ownerType, ownerId: a.ownerId }); }
+      }
+      await Store.set('attachIndex', idx);
+      state.clients.sort((a, b) => String(a.name).localeCompare(String(b.name), 'ar'));
+      await persistClients(); await persistVisits();
+      toast('تم الاسترجاع بنجاح');
+      render();
+    } catch (e) { toast('تعذر قراءة الملف'); }
+  };
+  r.readAsText(file);
+}
+async function wipeAll() {
+  if (!(await askConfirm('حذف كل العملاء والزيارات والمرفقات نهائيًا؟', 'حذف الكل'))) return;
+  if (!(await askConfirm('تأكيد أخير: هل صدّرت نسخة احتياطية؟ سيتم الحذف الآن.', 'تأكيد الحذف'))) return;
+  const idx = await Store.get('attachIndex', []);
+  for (const it of idx) await Store.del('att:' + it.id);
+  await Store.set('attachIndex', []);
+  state.clients = []; state.visits = [];
+  await persistClients(); await persistVisits();
+  toast('تم حذف كل البيانات');
+  setTab('upcoming');
+}
+
+/* ---------- 16) أزرار عامة ---------- */
+function fabAction() {
+  if (state.view.name === 'client') newVisit(state.view.id);
+  else newClient();
+}
+function copyText(t) {
+  const done = () => toast('تم نسخ الرابط');
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done).catch(() => fallback());
+  else fallback();
+  function fallback() {
+    const i = document.createElement('input'); i.value = t; document.body.appendChild(i); i.select();
+    try { document.execCommand('copy'); done(); } catch (e) { toast('انسخ الرابط يدويًا: ' + t); }
+    i.remove();
+  }
+}
+function openSheet(title, html) {
+  const root = document.getElementById('modalRoot');
+  root.innerHTML = `<div class="sheet-bg" onclick="if(event.target===this)closeSheet()">
+      <div class="sheet"><div class="sheet-head"><h2>${esc(title)}</h2><button class="x" onclick="closeSheet()">✕</button></div>
+      <div class="sheet-body">${html}</div></div></div>`;
+}
+function closeSheet() { document.getElementById('modalRoot').innerHTML = ''; }
+
+/* ============================================================
+   19) الأمان: كلمة مرور التطبيق (باسوورد)
+   - تخزين مشفّر SHA-256 + مِلح عشوائي (لا تُحفظ كلمة المرور أبدًا كما هي)
+   - تعيين عند أول تشغيل، تغيير، إزالة، تذكّرني 7 أيام، وقفل تلقائي
+   ============================================================ */
+const Auth = (function () {
+  const KEY = 'auth', RKEY = 'authRemember', LKEY = 'cd_remember_token';
+  const ITER = 3000, DAY = 86400000, REMDAYS = 7;
+  let rec = null, unlocked = false, mode = 'login', fails = 0, waitUntil = 0, hiddenAt = 0;
+
+  /* SHA-256 بتنفيذ JavaScript خالص (يعمل بدون إنترنت وبدون أي مكتبات) */
+  function sha256(str) {
+    function rr(v, a) { return (v >>> a) | (v << (32 - a)); }
+    var i, j, r = '', words = [], bitLen = str.length * 8;
+    if (!sha256.h) {
+      sha256.h = []; sha256.k = [];
+      var comp = {}, pc = 0, cand;
+      for (cand = 2; pc < 64; cand++) {
+        if (!comp[cand]) {
+          for (i = 0; i < 313; i += cand) comp[i] = cand;
+          sha256.h[pc] = (Math.pow(cand, .5) * 4294967296) | 0;
+          sha256.k[pc++] = (Math.pow(cand, 1 / 3) * 4294967296) | 0;
+        }
+      }
+    }
+    str += String.fromCharCode(128);
+    while (str.length % 64 - 56) str += String.fromCharCode(0);
+    for (i = 0; i < str.length; i++) {
+      j = str.charCodeAt(i);
+      words[i >> 2] = (words[i >> 2] || 0) | (j << ((3 - i % 4) * 8));
+    }
+    words[words.length] = (bitLen / 4294967296) | 0;
+    words[words.length] = bitLen;
+    var hash = sha256.h.slice(0, 8);
+    for (j = 0; j < words.length;) {
+      var w = words.slice(j, j += 16), oh = hash;
+      hash = hash.slice(0, 8);
+      for (i = 0; i < 64; i++) {
+        var w15 = w[i - 15], w2 = w[i - 2], a = hash[0], e = hash[4];
+        var t1 = hash[7] + (rr(e, 6) ^ rr(e, 11) ^ rr(e, 25)) + ((e & hash[5]) ^ ((~e) & hash[6])) + sha256.k[i] +
+          (w[i] = (i < 16) ? w[i] : (w[i - 16] + (rr(w15, 7) ^ rr(w15, 18) ^ (w15 >>> 3)) + w[i - 7] +
+            (rr(w2, 17) ^ rr(w2, 19) ^ (w2 >>> 10))) | 0);
+        var t2 = (rr(a, 2) ^ rr(a, 13) ^ rr(a, 22)) + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+        hash = [(t1 + t2) | 0].concat(hash);
+        hash[4] = (hash[4] + t1) | 0;
+      }
+      for (i = 0; i < 8; i++) hash[i] = (hash[i] + oh[i]) | 0;
+    }
+    for (i = 0; i < 8; i++) {
+      for (j = 3; j + 1; j--) { var b = (hash[i] >> (j * 8)) & 255; r += (b < 16 ? '0' : '') + b.toString(16); }
+    }
+    return r;
+  }
+  function utf8(s) { try { return unescape(encodeURIComponent(String(s))); } catch (e) { return String(s); } }
+  function H(x) { return sha256(utf8(x)); }
+  function rnd(n) {
+    const a = new Uint8Array(n);
+    if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(a);
+    else for (let i = 0; i < n; i++) a[i] = Math.floor(Math.random() * 256);
+    let s = '';
+    for (let i = 0; i < a.length; i++) s += ('0' + a[i].toString(16)).slice(-2);
+    return s;
+  }
+  function kdf(pass, salt, iter) {
+    iter = iter || ITER;
+    let x = H(salt + '|' + pass);
+    for (let i = 0; i < iter; i++) x = H(x + '|' + salt + '|' + i);
+    return x;
+  }
+  function same(a, b) {
+    if (!a || !b || a.length !== b.length) return false;
+    let d = 0;
+    for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
+    return d === 0;
+  }
+  function el(id) { return document.getElementById(id); }
+  function hasPass() { return !!(rec && rec.hash); }
+  function isLocked() { return !unlocked && hasPass(); }
+
+  function hideLock() { el('lockScreen').style.display = 'none'; el('appWrap').classList.remove('locked'); }
+  function showLock() { el('lockScreen').style.display = 'flex'; el('appWrap').classList.add('locked'); }
+  function setErr(m) { el('lockErr').textContent = m || ''; }
+  function shake() {
+    const c = el('lockScreen').querySelector('.lock-card');
+    c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake');
+  }
+  function err(m) { setErr(m); shake(); el('lockPass').value = ''; try { el('lockPass').focus(); } catch (e) { } }
+
+  function enterMode(m, reason) {
+    mode = m;
+    setErr('');
+    el('lockPass').value = ''; el('lockPass2').value = ''; el('lockHint').value = '';
+    el('lockPass').type = 'password'; el('lockEye').textContent = '👁️';
+    el('lockSetup').style.display = 'none';
+    el('lockRemember').style.display = 'none';
+    el('lockForgot').style.display = 'none';
+    el('lockRememberBox').checked = false;
+    el('lockTitle').textContent = 'يوميات العملاء';
+    if (m === 'setup') {
+      el('lockTitle').textContent = 'حماية التطبيق بكلمة مرور';
+      el('lockSub').textContent = 'حدّد كلمة مرور لحماية بيانات عملائك على هذا الجهاز.';
+      el('lockSetup').style.display = 'block';
+      el('lockGo').textContent = '🔐 تفعيل كلمة المرور';
+      el('lockForgot').style.display = 'block';
+      el('lockForgot').textContent = 'الدخول بدون كلمة مرور (غير موصى به)';
+      el('lockNote').innerHTML = 'تُخزَّن كلمة المرور <b>مشفَّرة</b> (SHA-256 مع ملح عشوائي) على جهازك فقط ولا تُرسل لأي مكان.';
+    } else if (m === 'login') {
+      el('lockSub').textContent = reason ? ('تم قفل التطبيق (' + reason + ') — أكمل بكلمة المرور.') : 'أدخل كلمة المرور للوصول إلى بيانات العملاء.';
+      el('lockGo').textContent = '🔓 دخول';
+      el('lockRemember').style.display = 'flex';
+      el('lockForgot').style.display = 'block';
+      el('lockForgot').textContent = 'نسيت كلمة المرور؟';
+      el('lockNote').innerHTML = (rec && rec.hint) ? ('💡 التلميح: <b>' + esc(rec.hint) + '</b>') : 'كل البيانات محفوظة على جهازك ولا تغادر الجهاز.';
+    } else {
+      el('lockTitle').textContent = 'إعادة تعيين كلمة المرور';
+      el('lockSub').textContent = 'لا يمكن استرجاع كلمة المرور، لكن يمكنك إعادة تعيينها. بياناتك (العملاء والزيارات والمرفقات) لن تُحذف.';
+      el('lockGo').textContent = '🔄 إعادة التعيين';
+      el('lockNote').innerHTML = 'بعد إعادة التعيين سيعمل التطبيق بدون كلمة مرور حتى تضبط واحدة جديدة من تبويب «بياناتي».';
+    }
+    setTimeout(() => { try { el('lockPass').focus(); } catch (e) { } }, 120);
+  }
+  function showSetup(reason) { unlocked = false; showLock(); enterMode('setup', reason); syncUI(); }
+  function showLogin(reason) { showLock(); enterMode('login', reason); syncUI(); }
+
+  async function tryRemember() {
+    try {
+      const r = await Store.get(RKEY, null);
+      const t = localStorage.getItem(LKEY);
+      if (!r || !t || !r.exp || r.exp < Date.now()) return false;
+      return same(r.hash, H(t));
+    } catch (e) { return false; }
+  }
+  async function setRemember(on) {
+    try {
+      if (on) {
+        const t = rnd(24);
+        localStorage.setItem(LKEY, t);
+        await Store.set(RKEY, { hash: H(t), exp: Date.now() + REMDAYS * DAY });
+      } else { localStorage.removeItem(LKEY); await Store.del(RKEY); }
+    } catch (e) { }
+  }
+  async function clearRemember() { try { localStorage.removeItem(LKEY); } catch (e) { } await Store.del(RKEY); }
+
+  async function saveRec(pass, hint) {
+    const salt = rnd(16);
+    rec = {
+      v: 1, salt: salt, hash: kdf(pass, salt), iter: ITER, hint: hint || '',
+      autoLock: (rec && rec.autoLock) || 0,
+      createdAt: (rec && rec.createdAt) || Date.now(), updatedAt: Date.now()
+    };
+    await Store.set(KEY, rec);
+  }
+  function verify(pass) { return !!rec && same(rec.hash, kdf(pass, rec.salt, rec.iter || ITER)); }
+
+  async function busy(btn, fn) {
+    const t = btn.textContent;
+    btn.disabled = true; btn.textContent = '⏳ لحظة…';
+    await new Promise(r => setTimeout(r, 30));
+    try { return await fn(); } finally { btn.disabled = false; btn.textContent = t; }
+  }
+
+  async function submit() {
+    const btn = el('lockGo');
+    if (waitUntil > Date.now()) return err('محاولات كثيرة — انتظر ' + Math.ceil((waitUntil - Date.now()) / 1000) + ' ثانية');
+    const p1 = el('lockPass').value || '';
+    if (mode === 'setup') {
+      const p2 = el('lockPass2').value || '';
+      if (p1.length < 4) return err('كلمة المرور يجب أن تكون 4 أحرف على الأقل');
+      if (p1 !== p2) return err('كلمتا المرور غير متطابقتين');
+      return busy(btn, async () => {
+        await saveRec(p1, el('lockHint').value.trim());
+        unlocked = true; hideLock(); syncUI(); toast('تم تفعيل كلمة المرور ✅');
+      });
+    }
+    if (mode === 'forgot') {
+      if (!(await askConfirm('إعادة تعيين كلمة المرور؟\nبياناتك لن تُحذف، وسيعمل التطبيق بدون كلمة مرور حتى تضبط واحدة جديدة.', 'إعادة التعيين'))) return;
+      await Store.del(KEY); rec = null; await clearRemember();
+      unlocked = true; hideLock(); syncUI(); toast('تمت إعادة التعيين');
+      setTimeout(() => showSetup(), 500);
+      return;
+    }
+    if (!p1) return err('أدخل كلمة المرور');
+    return busy(btn, async () => {
+      if (!verify(p1)) {
+        fails++;
+        if (fails >= 5) { waitUntil = Date.now() + 15000; fails = 0; return err('محاولات كثيرة خاطئة — انتظر 15 ثانية'); }
+        return err('كلمة المرور غير صحيحة' + (rec && rec.hint ? ' • التلميح: ' + rec.hint : ''));
+      }
+      fails = 0; unlocked = true;
+      await setRemember(el('lockRememberBox').checked);
+      hideLock(); syncUI(); toast('مرحبًا بك 👋');
+    });
+  }
+
+  function lock(reason) {
+    if (!hasPass()) { toast('لا توجد كلمة مرور مُفعّلة'); return; }
+    unlocked = false; showLogin(reason || 'قفل يدوي');
+  }
+  function syncUI() {
+    const b = el('lockBtn');
+    if (b) b.style.display = hasPass() ? 'inline-flex' : 'none';
+  }
+  function getAutoLock() { return (rec && +rec.autoLock) || 0; }
+  async function setAutoLock(v) {
+    if (!rec) { toast('فعّل كلمة المرور أولًا'); return; }
+    rec.autoLock = +v || 0;
+    await Store.set(KEY, rec);
+    toast((+v > 0) ? ('قفل تلقائي بعد ' + v + ' دقيقة') : 'تم إلغاء القفل التلقائي');
+  }
+
+  function setupFlow() {
+    if (hasPass()) { toast('كلمة المرور مُفعّلة — استخدم «تغيير كلمة المرور»'); return; }
+    showSetup();
+  }
+  function changeFlow() {
+    if (!hasPass()) { toast('لا توجد كلمة مرور بعد'); return; }
+    openSheet('تغيير كلمة المرور', `
+      <div class="card">
+        <label class="fld"><span>كلمة المرور الحالية</span><input type="password" id="a_old" autocomplete="current-password"></label>
+        <label class="fld"><span>كلمة المرور الجديدة</span><input type="password" id="a_new" autocomplete="new-password"></label>
+        <label class="fld"><span>تأكيد كلمة المرور الجديدة</span><input type="password" id="a_new2" autocomplete="new-password"></label>
+        <label class="fld"><span>تلميح (اختياري)</span><input type="text" id="a_hint" value="${esc(rec.hint || '')}"></label>
+      </div>
+      <button class="btn block" id="a_save" onclick="Auth.doChange()">💾 حفظ كلمة المرور الجديدة</button>`);
+  }
+  async function doChange() {
+    const o = el('a_old').value || '', n1 = el('a_new').value || '', n2 = el('a_new2').value || '';
+    if (!verify(o)) return toast('كلمة المرور الحالية غير صحيحة');
+    if (n1.length < 4) return toast('كلمة المرور الجديدة قصيرة (4 أحرف على الأقل)');
+    if (n1 !== n2) return toast('كلمتا المرور غير متطابقتين');
+    const btn = el('a_save');
+    if (btn) await busy(btn, async () => { await saveRec(n1, (el('a_hint').value || '').trim()); });
+    else await saveRec(n1, (el('a_hint').value || '').trim());
+    closeSheet(); toast('تم تغيير كلمة المرور ✅'); syncUI(); render();
+  }
+  function removeFlow() {
+    if (!hasPass()) { toast('لا توجد كلمة مرور'); return; }
+    openSheet('إزالة كلمة المرور', `
+      <div class="banner warn">⚠️ <div>سيصبح التطبيق مفتوحًا بدون كلمة مرور. البيانات لن تُحذف.</div></div>
+      <div class="card"><label class="fld"><span>أدخل كلمة المرور الحالية للتأكيد</span><input type="password" id="r_pass"></label></div>
+      <button class="btn block red" onclick="Auth.doRemove()">🗝️ إزالة كلمة المرور</button>`);
+  }
+  async function doRemove() {
+    const p = el('r_pass').value || '';
+    if (!verify(p)) return toast('كلمة المرور غير صحيحة');
+    await Store.del(KEY); rec = null; await clearRemember();
+    closeSheet(); toast('تم إزالة كلمة المرور'); syncUI(); render();
+  }
+
+  function wire() {
+    el('lockGo').onclick = () => submit();
+    el('lockPass').addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+    el('lockPass2').addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+    el('lockEye').onclick = () => {
+      const p = el('lockPass');
+      const show = p.type === 'password';
+      p.type = show ? 'text' : 'password';
+      el('lockEye').textContent = show ? '🙈' : '👁️';
+    };
+    el('lockForgot').onclick = () => {
+      if (mode === 'setup') { unlocked = true; hideLock(); syncUI(); toast('يمكنك تفعيل كلمة المرور لاحقًا من تبويب «بياناتي»'); return; }
+      enterMode('forgot');
+    };
+    document.addEventListener('visibilitychange', () => {
+      const min = getAutoLock();
+      if (!hasPass() || !min || !unlocked) return;
+      if (document.visibilityState === 'hidden') hiddenAt = Date.now();
+      else if (hiddenAt && Date.now() - hiddenAt > min * 60000) { hiddenAt = 0; lock('قفل تلقائي'); }
+    });
+  }
+
+  async function init() {
+    rec = await Store.get(KEY, null);
+    if (rec && !rec.hash) rec = null;
+    wire();
+    syncUI();
+    if (!hasPass()) { showSetup(); return { hasPass: false, unlocked: false }; }
+    if (await tryRemember()) { unlocked = true; hideLock(); syncUI(); return { hasPass: true, unlocked: true }; }
+    showLogin();
+    return { hasPass: true, unlocked: false };
+  }
+
+  return {
+    init, hasPass, isLocked, verify, lock, syncUI, showSetup, showLogin, enterMode, submit,
+    setupFlow, changeFlow, doChange, removeFlow, doRemove, setAutoLock, getAutoLock,
+    _hash: H, _kdf: kdf
+  };
+})();
+
+/* ============================================================
+   20) تبويب «كل المرفقات» — تجميع مرفقات كل العملاء والزيارات
+   ============================================================ */
+async function loadAttachList() {
+  if (state.attLoading || !state.attDirty) return;
+  state.attLoading = true; state.attDirty = false;
+  const idx = await Store.get('attachIndex', []);
+  const list = [];
+  for (const it of idx) { const a = await Store.get('att:' + it.id, null); if (a) list.push(a); }
+  list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  state.attList = list;
+  state.attLoading = false;
+  if (state.tab === 'attach' && state.view.name === 'root') render();
+}
+function attClientId(a) {
+  if (a.ownerType === 'client') return a.ownerId;
+  const v = state.visits.find(x => x.id === a.ownerId);
+  return v ? v.clientId : '';
+}
+function viewAttach() {
+  const all = state.attList || [];
+  const q = (state.attSearch || '').trim().toLowerCase();
+  let arr = all.slice();
+  if (state.attFilterClient) arr = arr.filter(a => attClientId(a) === state.attFilterClient);
+  if (state.attKind === 'img') arr = arr.filter(a => a.isImg);
+  else if (state.attKind === 'file') arr = arr.filter(a => !a.isImg);
+  if (q) arr = arr.filter(a => (String(a.name || '') + ' ' + String(a.type || '')).toLowerCase().includes(q));
+  const fc = state.attFilterClient ? clientById(state.attFilterClient) : null;
+  let h = `<div class="searchbar"><span class="ic">🔍</span>
+      <input type="search" id="aq" placeholder="ابحث باسم الملف أو نوعه…" value="${esc(state.attSearch || '')}" oninput="onAttSearch(this.value)"></div>
+    <div class="toolbar">
+      <button class="seg ${state.attKind === 'all' ? 'on' : ''}" onclick="setAttKind('all')">الكل (${all.length})</button>
+      <button class="seg ${state.attKind === 'img' ? 'on' : ''}" onclick="setAttKind('img')">📷 صور</button>
+      <button class="seg ${state.attKind === 'file' ? 'on' : ''}" onclick="setAttKind('file')">📄 ملفات وفواتير</button>
+      <button class="seg" onclick="chooseAttachTarget()">➕ إضافة مرفق</button>
+    </div>`;
+  if (fc) h += `<div class="banner info">📎 <div>عرض مرفقات: <b>${esc(fc.name)}</b></div>
+      <button class="btn sm ghost" style="margin-right:auto" onclick="clearAttFilter()">إظهار الكل</button></div>`;
+  if (!all.length) {
+    return h + `<div class="empty"><span class="big">📎</span>لا توجد مرفقات بعد.<br>
+      افتح ملف أي عميل وأضف صورًا أو فواتير، وستظهر كلها هنا مجمّعة تلقائيًا.</div>
+      <button class="btn block" onclick="chooseAttachTarget()">➕ إضافة مرفق لعميل</button>`;
+  }
+  h += `<div class="kpis">
+      <div class="kpi"><b>${all.length}</b><span>إجمالي المرفقات</span></div>
+      <div class="kpi"><b>${all.filter(a => a.isImg).length}</b><span>صور</span></div>
+      <div class="kpi"><b>${all.filter(a => !a.isImg).length}</b><span>ملفات وفواتير</span></div>
+    </div>`;
+  if (!arr.length) return h + `<div class="empty"><span class="big">🔍</span>لا نتائج مطابقة للتصفية الحالية.</div>`;
+  const groups = {};
+  arr.forEach(a => { const k = attClientId(a) || '__none'; (groups[k] = groups[k] || []).push(a); });
+  Object.keys(groups).forEach(k => {
+    const c = clientById(k), g = groups[k];
+    h += `<div class="section-title">${c ? esc(c.name) : 'غير مرتبط بعميل'} <span class="tag">${g.length}</span>
+      ${c ? `<button class="btn sm ghost" style="margin-right:auto" onclick="openClient('${k}')">فتح ملف العميل</button>` : ''}</div>
+      <div class="card">${attsHtml(g)}</div>`;
+  });
+  return h;
+}
+function onAttSearch(v) {
+  state.attSearch = v;
+  const m = document.getElementById('main');
+  if (m && state.tab === 'attach' && state.view.name === 'root') {
+    m.innerHTML = viewAttach();
+    const i = document.getElementById('aq');
+    if (i) { i.focus(); i.setSelectionRange(v.length, v.length); }
+  }
+}
+function setAttKind(k) { state.attKind = k; render(); }
+function clearAttFilter() { state.attFilterClient = ''; render(); }
+function openClientAtts(id) {
+  state.attFilterClient = id; state.attKind = 'all'; state.attSearch = '';
+  setTab('attach');
+}
+async function chooseAttachTarget() {
+  const list = state.clients.slice();
+  if (!list.length) { toast('أضف عميلًا أولًا'); return newClient(); }
+  openSheet('إضافة مرفق — اختر العميل', `<div class="hint">اختر العميل ليُضاف المرفق إلى ملفه مباشرة.</div>
+    <div class="cb-list">` + list.map(c =>
+      `<div class="card tap" onclick="closeSheet();pickFor('client','${c.id}','__menu')">
+        <div class="row"><div class="avatar">${esc(initials(c.name))}</div>
+          <div class="grow"><div class="name">${esc(c.name)}</div>
+          <div class="meta">${clientAttCount(c.id) ? '📎 ' + clientAttCount(c.id) + ' مرفق' : 'لا مرفقات'}</div></div>
+          <span style="color:#94a3b8;font-size:20px">›</span></div>
+      </div>`).join('') + `</div>`);
+}
+
+/* ---------- 17) التشغيل ---------- */
+async function boot() {
+  const mode = await Store.init();
+  state.clients = await Store.get('clients', []);
+  state.visits = await Store.get('visits', []);
+  if (!Array.isArray(state.clients)) state.clients = [];
+  if (!Array.isArray(state.visits)) state.visits = [];
+  state.clients.sort((a, b) => String(a.name).localeCompare(String(b.name), 'ar'));
+  document.querySelectorAll('nav.bottom button').forEach(b => b.onclick = () => setTab(b.dataset.tab));
+
+  /* فتح تبويب محدد من رابط اختصار التطبيق مثل ?tab=clients */
+  try {
+    const tb = new URLSearchParams(location.search).get('tab');
+    if (['upcoming', 'clients', 'visits', 'attach', 'data'].indexOf(tb) >= 0) {
+      state.tab = tb;
+      document.querySelectorAll('nav.bottom button').forEach(b => b.classList.toggle('active', b.dataset.tab === tb));
+    }
+  } catch (e) { }
+  window.addEventListener('beforeunload', () => {});
+  await refreshAttCounts();
+  await Auth.init();
+  render();
+  if (mode === 'mem') toast('تنبيه: التخزين المحلي غير متاح — صدّر نسخة احتياطية', 5000);
+  window.__booted = true;
+}
+
+/* ---------- 18) اختبار ذاتي (يظهر فقط عند ?selftest=1) ---------- */
+if (location.search.indexOf('selftest=1') >= 0) {
+  window.__selftest = async function () {
+    const log = [];
+    function ok(n, c) { log.push((c ? 'PASS' : 'FAIL') + ' :: ' + n); return c; }
+    state.clients = []; state.visits = [];
+    const id = await saveClient({ name: 'عميل اختبار', phone: '01000000000', address: 'القاهرة', mapLink: 'https://maps.app.goo.gl/abc', business: 'تجارة', notes: '' }, null);
+    ok('add client', state.clients.length === 1);
+    ok('client by id', !!clientById(id));
+    await saveVisit({ clientId: id, date: todayISO(), purpose: 'تحصيل', outcome: 'تم', notes: 'ن', nextDate: todayISO(), nextPurpose: 'متابعة' }, null);
+    ok('add visit', state.visits.length === 1);
+    ok('visitsOf', visitsOf(id).length === 1);
+    ok('nextVisitOf', !!nextVisitOf(id));
+    ok('upcoming list', upcomingList().length === 1);
+    ok('overdue count type', typeof overdueCount() === 'number');
+    ok('maps url', mapsUrl(clientById(id)).indexOf('google.com/maps') >= 0);
+    ok('dir url', dirUrl(clientById(id)).indexOf('destination=') > 0);
+    ok('tel url', telUrl('01000000000') === 'tel:01000000000');
+    ok('wa url', waUrl('01000000000') === 'https://wa.me/01000000000');
+    ok('relDay today', relDay(todayISO()) === 'اليوم');
+    ok('fmtDate', fmtDate('2026-03-05').indexOf('مارس') > 0);
+    const blob = 'data:text/plain;base64,SGVsbG8=';
+    const att = { id: uid(), name: 't.txt', type: 'text/plain', size: 5, data: blob, createdAt: Date.now(), isImg: false, ownerType: 'client', ownerId: id };
+    await saveAttachments('client', id, [att]); await indexAdd([att]);
+    ok('attachment saved', (await attachmentsOf('client', id)).length === 1);
+    render(); ok('render root', document.getElementById('main').innerHTML.length > 50);
+    state.view = { name: 'client', id }; render(); ok('render client', document.getElementById('main').innerHTML.indexOf('جوجل ماب') > 0);
+    state.view = { name: 'newClient' }; render(); ok('render client form', !!document.getElementById('f_name'));
+    state.view = { name: 'visit', clientId: id }; render(); ok('render visit form', !!document.getElementById('v_purpose'));
+    setTab('visits'); ok('render visits tab', document.getElementById('main').innerHTML.length > 50);
+    setTab('data'); ok('render data tab', document.getElementById('main').innerHTML.indexOf('نسخة') > 0);
+    ok('registerSW is a function', typeof registerSW === 'function');
+    ok('registerSW safe when SW unsupported', registerSW() === false);
+    ok('openClient defined as function', typeof openClient === 'function');
+    openClient(id);
+    ok('openClient navigates to client view', state.view.name === 'client' && state.view.id === id);
+    ok('client view rendered after tap', document.getElementById('main').innerHTML.indexOf('جوجل ماب') > 0);
+    ok('openClient guards unknown id', (function(){ var before=state.view.name; openClient('__nope__'); return state.view.name===before; })());
+    setTab('attach'); ok('render attachments tab', document.getElementById('main').innerHTML.indexOf('مرفقات') > 0);
+    ok('attach counts', attCountOf('client', id) === 1 && state.attTotal === 1);
+    ok('client att count rolls up visits', clientAttCount(id) === 1);
+    ok('attach client mapping', attClientId(att) === id);
+    ok('sha256 vector', Auth._hash('abc') === 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad');
+    ok('sha256 empty vector', Auth._hash('') === 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');
+    ok('kdf deterministic', Auth._kdf('pass', 'saltsalt', 8) === Auth._kdf('pass', 'saltsalt', 8));
+    ok('kdf differs by salt', Auth._kdf('pass', 'saltA', 8) !== Auth._kdf('pass', 'saltB', 8));
+    ok('file icon pdf', fileIco('application/pdf') === '📕');
+    setTab('clients'); ok('search filter', (function () { state.search = 'عميل اختبار'; const h = viewClients(); state.search = ''; return h.indexOf('عميل اختبار') > 0; })());
+    await deleteClient(id);
+    ok('delete client cascade', state.clients.length === 0 && state.visits.length === 0 && (await attachmentsOf('client', id)).length === 0);
+    window.__selftestResult = log;
+    return log;
+  };
+}
+
+/* ---------- 21) Service Worker — العمل بدون إنترنت والتثبيت كتطبيق ---------- */
+function registerSW() {
+  if (!('serviceWorker' in navigator)) return false;
+  const proto = location.protocol;
+  const host = location.hostname || '';
+  const okProto = (proto === 'https:') || host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+  if (!okProto) { console.warn('[SW] يحتاج HTTPS أو localhost — لا يعمل من file://'); return false; }
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then((reg) => {
+      if (reg.waiting) toast('يتوفر تحديث جديد — أغلق التطبيق وأعد فتحه', 6000);
+      reg.addEventListener('updatefound', () => {
+        const ns = reg.installing;
+        if (!ns) return;
+        ns.addEventListener('statechange', () => {
+          if (ns.state === 'installed' && navigator.serviceWorker.controller) {
+            toast('يتوفر تحديث جديد — أعد تحميل الصفحة', 6000);
+          }
+        });
+      });
+    }).catch((err) => console.warn('[SW] فشل التسجيل:', err));
+  });
+  return true;
+}
+registerSW();
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+
 </script>
 </body>
 </html>
